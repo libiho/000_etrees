@@ -28,83 +28,85 @@ import com.spring.common.CommonUtil;
 
 @Controller
 public class BoardController {
-	
-	@Autowired 
+
+	@Autowired
 	boardService boardService;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
-	public String boardList(Locale locale, Model model,PageVo pageVo) throws Exception{
-		
+	public String boardList(Locale locale, Model model, PageVo pageVo) throws Exception {
+
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
-		
+
 		int page = 1;
 		int totalCnt = 0;
-		
-		if(pageVo.getPageNo() == 0){
-			pageVo.setPageNo(page);;
+
+		if (pageVo.getPageNo() == 0) {
+			pageVo.setPageNo(page);
+			;
 		}
-		
+
 		boardList = boardService.SelectBoardList(pageVo);
 		totalCnt = boardService.selectBoardCnt();
-		
+
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("totalCnt", totalCnt);
 		model.addAttribute("pageNo", page);
-		
+
 		return "board/boardList";
 	}
-	
+
 	@RequestMapping(value = "/board/{boardType}/{boardNum}/boardView.do", method = RequestMethod.GET)
-	public String boardView(Locale locale, Model model
-			,@PathVariable("boardType")String boardType
-			,@PathVariable("boardNum")int boardNum) throws Exception{
-		
+	public String boardView(Locale locale, Model model, @PathVariable("boardType") String boardType,
+			@PathVariable("boardNum") int boardNum) throws Exception {
+
 		BoardVo boardVo = new BoardVo();
-		
-		
-		boardVo = boardService.selectBoard(boardType,boardNum);
-		
+
+		boardVo = boardService.selectBoard(boardType, boardNum);
+
 		model.addAttribute("boardType", boardType);
 		model.addAttribute("boardNum", boardNum);
 		model.addAttribute("board", boardVo);
-		
+
 		return "board/boardView";
 	}
-	
+
 	@RequestMapping(value = "/board/boardWrite.do", method = RequestMethod.GET)
-	public String boardWrite(Locale locale, Model model) throws Exception{
-		
-		
+	public String boardWrite(Locale locale, Model model) throws Exception {
+
 		return "board/boardWrite";
 	}
-	
+
 	@RequestMapping(value = "/board/boardWriteAction.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String boardWriteAction(Locale locale,BoardVo boardVo) throws Exception{
-		
+	public String boardWriteAction(Locale locale, BoardVo boardVo) throws Exception {
+
 		HashMap<String, String> result = new HashMap<String, String>();
 		CommonUtil commonUtil = new CommonUtil();
-		
+
 		int resultCnt = boardService.boardInsert(boardVo);
-		
-		result.put("success", (resultCnt > 0)?"Y":"N");
-		String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
-		
-		System.out.println("callbackMsg::"+callbackMsg);
-		
+
+		result.put("success", (resultCnt > 0) ? "Y" : "N");
+		String callbackMsg = commonUtil.getJsonCallBackString(" ", result);
+
+		System.out.println("callbackMsg::" + callbackMsg);
+
 		return callbackMsg;
 	}
-	
-	
+
 	@RequestMapping(value = "/board/boardUpdate.do", method = RequestMethod.POST)
-	public String boardUpdate (Model model, int boardNum) {
-		
-		return "";
+	public String boardUpdate(Model model, int boardNum, String boardType) throws Exception {
+
+		BoardVo boardVo = new BoardVo();
+
+		boardVo = boardService.selectBoard(boardType, boardNum);
+
+		model.addAttribute("boardType", boardType);
+		model.addAttribute("boardNum", boardNum);
+		model.addAttribute("board", boardVo);
+
+		return "board/boardUpdate";
 	}
-	
-	
-	
-	
+
 } // end
