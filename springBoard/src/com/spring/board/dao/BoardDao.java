@@ -17,4 +17,7 @@ public interface BoardDao {
 
 	public int boardInsert(BoardVo boardVo) throws Exception;
 
+	public int boardUpdate(BoardVo boarVo) throws Exception;
+
+	public int boardDelete(BoardVo boardVo) throws Exception;
 }

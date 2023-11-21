@@ -169,29 +169,12 @@ NOCOMPRESS
 NOPARALLEL;
 
 
-  INSERT INTO 
-        BOARD
-        (BOARD_TYPE
-        ,BOARD_NUM
-        ,BOARD_TITLE
-        ,BOARD_COMMENT
-        ,CREATOR
-        ,CREATE_TIME
-        ,MODIFIER
-        ,MODIFIED_TIME
-        )
-        VALUES
-        ('1'
-        ,1
-        ,'왜안되누'
-        ,'뭐가문제구'
-        ,'SYSTEM'
-        ,TO_CHAR(SYSDATE)
-        ,'SYSTEM'
-        ,TO_CHAR(SYSDATE)
-        );
+
         
         
         select * from board;
+        
+        
+        
 
 

@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+	pageEncoding="EUC-KR"%>
     <%@include file="/WEB-INF/views/common/common.jsp"%>  
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 </head>
 
@@ -13,6 +13,8 @@
 	$j(document).ready(function(){
 		
 		$j("#submit").on("click",function(){
+			var $num = $j('input[name=boardNum]').val();
+			var $type = $j('input[name=boardType]').val();
 			var $frm = $j('.boardUpdate :input');
 			var param = $frm.serialize();
 			
@@ -23,15 +25,15 @@
 			    data : param,
 			    success: function(data, textStatus, jqXHR)
 			    {
-					alert("ìˆ˜ì •ì™„ë£Œ");
+					alert("¼öÁ¤¿Ï·á");
 					
-					alert("ë©”ì„¸ì§€:"+data.success);
+					alert("¸Þ¼¼Áö:"+data.success);
 					
-					location.href = "/board/boardList.do?pageNo=";
+					location.href = "/board/"+ $type+ "/" + $num + "/boardView.do?pageNo="+$num;
 			    },
 			    error: function (jqXHR, textStatus, errorThrown)
 			    {
-			    	alert("ì‹¤íŒ¨");
+			    	alert("½ÇÆÐ");
 			    }
 			});
 		});
@@ -43,10 +45,14 @@
 <body>
 
 <form class="boardUpdate">
+
+	<input type="hidden" name="boardType" value="${board.boardType}">
+			<input type="hidden" name="boardNum" value="${board.boardNum}">
+
 <table align="center">
 	<tr>
 			<td align="right">
-			<input id="submit" type="button" value="ë“±ë¡ ">
+			<input id="submit" type="button" value="µî·Ï ">
 			</td>
 		</tr>
 	<tr>
@@ -86,7 +92,7 @@
 	
 			<tr>
 		<td align="right">
-			<a href="/board/boardList.do">List ë‹¤ì‹œë³´ê¸°</a>
+			<a href="/board/boardList.do">List ´Ù½Ãº¸±â</a>
 		</td>
 	</tr>
 		

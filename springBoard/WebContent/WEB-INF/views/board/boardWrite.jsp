@@ -12,8 +12,10 @@
 	$j(document).ready(function(){
 		
 		$j("#submit").on("click",function(){
+			
 			var $frm = $j('.boardWrite :input');
 			var param = $frm.serialize();
+			
 			
 			$j.ajax({
 			    url : "/board/boardWriteAction.do",
@@ -26,7 +28,7 @@
 					
 					alert("¸Þ¼¼Áö:"+data.success);
 					
-					location.href = "/board/boardList.do?pageNo=";
+					location.href = "/board/boardList.do";
 			    },
 			    error: function (jqXHR, textStatus, errorThrown)
 			    {

@@ -33,36 +33,74 @@
 		<tr>
 			<td align="right"><a href="/board/boardList.do">List</a></td>
 		</tr>
+
 		<tr>
-			<td align="right"><a onclick="formSubmit(1)">수정</a></td>
+
+			<td align="right"><button onclick="fromSubmit(1);">수정</button></td>
 		</tr>
 
 		<tr>
-			<td align="right"><a onclick="formSubmit(2)">삭제</a></td>
+			<td align="right"><button onclick="fromSubmit(2);">삭제</button></td>
+
+
 		</tr>
 
 	</table>
 
+	<div>
 
-	<form id="choiceForm">
-		<input type="hidden" name="boardType" value="${board.boardType}">
-		<input type="hidden" name="boardNum" value="${board.boardNum}">
-	</form>
+		<form id="choiceForm" action="" method="post">
+
+			<input type="hidden" name="boardType" value="${board.boardType}">
+			<input type="hidden" name="boardNum" value="${board.boardNum}">
+
+		</form>
+
+	</div>
+
+
 
 
 	<script>
+		/* 		$j('#submit').on("click",function(){
+		 alert('완성');
+		 });  */
 
-function formSubmit(num){
-	
-	if(num==1){
-		$(#choiceForm).attr("action","/board/boardUpdate.do").submit();
-	}else{
-		$(#choiceForm).attr("action","/board/boardDelete.do").submit();
-	}
-	
-}
+		function fromSubmit(num) {
+			if (num == 1) {
+				$j("#choiceForm").attr("action", "/board/boardUpdate.do")
+						.submit();
+			} else {
+				/* 	$j("#choiceForm").attr("action", "/board/boardDelete.do").submit(); */
 
-</script>
+				var $frm = $j('#choiceForm :input');
+				var param = $frm.serialize();
+				console.log(param);
+
+				$j.ajax({
+					url : "/board/boardDelete.do",
+					dataType : "json",
+					type : "POST",
+					data : param,
+					success : function(data, textStatus, jqXHR) {
+						
+						console.log(data);
+						
+						alert("삭제완료");
+
+						alert("메세지:" + data.success);
+
+						location.href = "/board/boardList.do";
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						alert("실패");
+						console.log(param);
+					}
+				});
+
+			}
+		}
+	</script>
 
 
 </body>

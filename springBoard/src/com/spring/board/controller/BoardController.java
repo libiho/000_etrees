@@ -44,7 +44,7 @@ public class BoardController {
 
 		if (pageVo.getPageNo() == 0) {
 			pageVo.setPageNo(page);
-			;
+//			;
 		}
 
 		boardList = boardService.SelectBoardList(pageVo);
@@ -96,7 +96,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/board/boardUpdate.do", method = RequestMethod.POST)
-	public String boardUpdate(Model model, int boardNum, String boardType) throws Exception {
+	public String boardUpdate(Locale locale, Model model, int boardNum, String boardType) throws Exception {
 
 		BoardVo boardVo = new BoardVo();
 
@@ -108,5 +108,45 @@ public class BoardController {
 
 		return "board/boardUpdate";
 	}
+	
+	
+	
+	
+	
+	@RequestMapping(value="/board/boardUpdateAction.do", method= RequestMethod.POST)
+	@ResponseBody
+	public String boardUpdateAction(Locale locale, BoardVo boardVo) throws Exception {
+		HashMap<String, String> result = new HashMap<String, String>();
+		CommonUtil commonUtil = new CommonUtil();
+
+		int resultCnt = boardService.boardUpdate(boardVo);
+
+		result.put("success", (resultCnt > 0) ? "Y" : "N");
+		String callbackMsg = commonUtil.getJsonCallBackString(" ", result);
+
+
+		return callbackMsg;
+
+	}
+	
+	
+	@RequestMapping(value="/board/boardDelete.do", method= RequestMethod.POST)
+	@ResponseBody
+	public String boardDelete(Locale locale, BoardVo boardVo) throws Exception {
+		HashMap<String, String> result = new HashMap<String, String>();
+		CommonUtil commonUtil = new CommonUtil();
+
+		int resultCnt = boardService.boardDelete(boardVo);
+
+		result.put("success", (resultCnt > 0) ? "Y" : "N");
+		String callbackMsg = commonUtil.getJsonCallBackString(" ", result);
+
+		
+		 return callbackMsg;
+
+	}
+	
+	
+	
 
 } // end
