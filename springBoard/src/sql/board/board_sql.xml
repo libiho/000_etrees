@@ -9,6 +9,7 @@
 		<result property="boardComment" column="BOARD_COMMENT" />
 	</resultMap>
 
+
 	<select id="boardList"
 		parameterType="com.spring.board.vo.PageVo" resultMap="boardVo">
 		SELECT
@@ -24,13 +25,19 @@
 		,BOARD_NUM
 		,BOARD_TITLE
 		,BOARD_COMMENT
-		,ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC) AS NUMROW
+		,ROW_NUMBER() OVER(ORDER BY
+		BOARD_NUM DESC) AS NUMROW
 		,COUNT(*) OVER() AS TOTAL_CNT
 		FROM
 		BOARD
 		)
-		WHERE NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
+		WHERE
+		NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
 	</select>
+
+
+
+
 
 	<select id="boardTotal" parameterType="Integer"
 		resultType="Integer">
@@ -38,7 +45,22 @@
 		COUNT(*) AS TOTAL_CNT
 		FROM
 		BOARD
+
 	</select>
+
+
+
+	<select id="searchBoardTotal" parameterType="Integer"
+		resultType="Integer">
+		SELECT
+		COUNT(*) AS TOTAL_CNT
+		FROM
+		BOARD
+		WHERE BOARD_TYPE =
+		#{boardType}
+	</select>
+
+
 
 	<select id="boardView"
 		parameterType="com.spring.board.vo.BoardVo" resultMap="boardVo">
@@ -49,7 +71,8 @@
 		,BOARD_COMMENT
 		FROM
 		BOARD
-		WHERE BOARD_TYPE = #{boardType}
+		WHERE
+		BOARD_TYPE = #{boardType}
 		AND BOARD_NUM = #{boardNum}
 	</select>
 
@@ -70,7 +93,8 @@
 		('1'
 		,(SELECT NVL(TO_NUMBER(MAX(BOARD_NUM)+1),1)
 		FROM BOARD
-		WHERE BOARD_TYPE = '1')
+		WHERE BOARD_TYPE
+		= '1')
 		,#{boardTitle}
 		,#{boardComment}
 		,'SYSTEM'
@@ -87,7 +111,8 @@
 		UPDATE
 		BOARD
 		SET BOARD_TITLE = #{boardTitle}
-		, BOARD_COMMENT = #{boardComment}
+		,
+		BOARD_COMMENT = #{boardComment}
 		, MODIFIED_TIME = TO_CHAR(SYSDATE)
 		WHERE BOARD_NUM = #{boardNum}
 		AND BOARD_TYPE = #{boardType}
@@ -95,11 +120,13 @@
 	</update>
 
 
-	<delete id="boardDelete" parameterType="com.spring.board.vo.BoardVo">
+	<delete id="boardDelete"
+		parameterType="com.spring.board.vo.BoardVo">
 		DELETE
 		FROM BOARD
 		WHERE BOARD_NUM = #{boardNum}
-		AND BOARD_TYPE = #{boardType}
+		AND
+		BOARD_TYPE = #{boardType}
 
 	</delete>
 

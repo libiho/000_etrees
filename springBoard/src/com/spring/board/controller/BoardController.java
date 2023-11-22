@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -34,9 +35,11 @@ public class BoardController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
-	public String boardList(Locale locale, Model model, PageVo pageVo) throws Exception {
 
+	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
+	public String boardList(Locale locale, Model model, PageVo pageVo ) throws Exception {
+
+		
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
 
 		int page = 1;
@@ -44,7 +47,6 @@ public class BoardController {
 
 		if (pageVo.getPageNo() == 0) {
 			pageVo.setPageNo(page);
-//			;
 		}
 
 		boardList = boardService.SelectBoardList(pageVo);
@@ -56,6 +58,9 @@ public class BoardController {
 
 		return "board/boardList";
 	}
+	
+	
+
 
 	@RequestMapping(value = "/board/{boardType}/{boardNum}/boardView.do", method = RequestMethod.GET)
 	public String boardView(Locale locale, Model model, @PathVariable("boardType") String boardType,
@@ -71,6 +76,15 @@ public class BoardController {
 
 		return "board/boardView";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping(value = "/board/boardWrite.do", method = RequestMethod.GET)
 	public String boardWrite(Locale locale, Model model) throws Exception {
@@ -145,8 +159,6 @@ public class BoardController {
 		 return callbackMsg;
 
 	}
-	
-	
 	
 
 } // end
