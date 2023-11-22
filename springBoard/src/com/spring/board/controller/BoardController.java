@@ -25,6 +25,7 @@ import com.spring.board.HomeController;
 import com.spring.board.service.boardService;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.TypeVo;
 import com.spring.common.CommonUtil;
 
 @Controller
@@ -36,8 +37,11 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 
+
+	
+	
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
-	public String boardList(Locale locale, Model model, PageVo pageVo ) throws Exception {
+	public String boardList(Locale locale, Model model, TypeVo typeVo) throws Exception {
 
 		
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
@@ -45,12 +49,14 @@ public class BoardController {
 		int page = 1;
 		int totalCnt = 0;
 
-		if (pageVo.getPageNo() == 0) {
-			pageVo.setPageNo(page);
+		if (typeVo.getPageNo() == 0) {
+			typeVo.setPageNo(page);
 		}
-
-		boardList = boardService.SelectBoardList(pageVo);
-		totalCnt = boardService.selectBoardCnt();
+		
+	
+		boardList = boardService.selectBoardListSearch(typeVo);
+		totalCnt = boardService.selectBoardCntSearch(typeVo);
+		
 
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("totalCnt", totalCnt);
@@ -58,6 +64,8 @@ public class BoardController {
 
 		return "board/boardList";
 	}
+	
+	
 	
 	
 

@@ -10,8 +10,10 @@
 	</resultMap>
 
 
-	<select id="boardList"
-		parameterType="com.spring.board.vo.PageVo" resultMap="boardVo">
+
+
+	<select id="boardSearch"
+		parameterType="com.spring.board.vo.TypeVo" resultMap="boardVo">
 		SELECT
 		BOARD_TYPE
 		,BOARD_NUM
@@ -33,21 +35,29 @@
 		)
 		WHERE
 		NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
+		 <if test="boardType != null">
+		AND BOARD_TYPE =
+		#{boardType}
+		</if>
 	</select>
 
 
 
 
 
-	<select id="boardTotal" parameterType="Integer"
+
+
+
+	<select id="boardSearchTotal" parameterType="Integer"
 		resultType="Integer">
 		SELECT
 		COUNT(*) AS TOTAL_CNT
 		FROM
 		BOARD
-
+		<if test="boardType != null">
+			WHERE BOARD_TYPE = #{boardType}
+		</if>
 	</select>
-
 
 
 	<select id="searchBoardTotal" parameterType="Integer"

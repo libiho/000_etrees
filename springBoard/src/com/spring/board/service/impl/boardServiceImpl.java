@@ -2,6 +2,7 @@ package com.spring.board.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.spring.board.dao.BoardDao;
 import com.spring.board.service.boardService;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.TypeVo;
 
 @Service
 public class boardServiceImpl implements boardService{
@@ -23,20 +25,7 @@ public class boardServiceImpl implements boardService{
 		return boardDao.selectTest();
 	}
 	
-	@Override
-	public List<BoardVo> SelectBoardList(PageVo pageVo) throws Exception {
-		// TODO Auto-generated method stub
-		
-		return boardDao.selectBoardList(pageVo);
-	}
-	
-	
-	
-	@Override
-	public int selectBoardCnt() throws Exception {
-		// TODO Auto-generated method stub
-		return boardDao.selectBoardCnt();
-	}
+
 	
 	
 	
@@ -68,4 +57,18 @@ public class boardServiceImpl implements boardService{
 	public int boardDelete(BoardVo boardVo) throws Exception {
 		return boardDao.boardDelete(boardVo);
 	}
+
+	@Override
+	public List<BoardVo> selectBoardListSearch(TypeVo typeVo) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDao.selectBoardListSearch(typeVo);
+	}
+
+	@Override
+	public int selectBoardCntSearch(TypeVo typeVo) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDao.selectBoardCntSearch(typeVo);
+	}
+
+	
 }

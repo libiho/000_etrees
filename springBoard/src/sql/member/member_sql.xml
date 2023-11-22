@@ -25,11 +25,10 @@
 	</insert>
 
 
-	<select id="memberCheckId" parameterType="Integer">
+	<select id="memberCheckId" parameterType="String" resultType="Integer">
 		SELECT COUNT(*)
 		FROM USER_INFO
 		WHERE USER_ID = #{userId}
-
 	</select>
 
 

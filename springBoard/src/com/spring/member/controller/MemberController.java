@@ -34,27 +34,21 @@ public class MemberController {
 	@ResponseBody
 	public String checkId(Locale locale, String userId ) throws Exception {
 		
-		String result = "Y";
-		
+		System.out.println(userId);
 		int flag = memberService.memberCheckId(userId);
 		
-		System.out.println("@@@@@@@@@@@@@@");
-		
-		System.out.println(flag);
-		
-		if(flag == 1) {
-			result = "N";
-		}
-		
-		System.out.println(result);
-		
-		
-		return result;
+		return flag > 0 ? "N" : "Y";
 	}
+	
+	
+	
 	
 	
 	@RequestMapping(value = "/member/memberInsert.do", method = RequestMethod.GET)
 	public String memberInsert(Locale locale) throws Exception {
+		
+		// 멤버 전체 조회 후 model로 phone앞번호 던지기
+		
 		return "member/memberInsert";
 	}
 	

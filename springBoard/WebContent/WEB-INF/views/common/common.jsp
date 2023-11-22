@@ -12,7 +12,7 @@
 </head>
 <script src="/resources/js/jquery-1.10.2.js"></script>
 <script type="text/javascript">
-	var $j = jQuery.noConflict();
+	var $j = jQuery.noConflict(); // jQuery/$ 는 이제 $j로 변경됨.
 </script>
 <body>
 
