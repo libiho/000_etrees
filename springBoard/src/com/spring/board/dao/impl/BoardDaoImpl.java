@@ -27,10 +27,6 @@ public class BoardDaoImpl implements BoardDao{
 		
 		return a;
 	}
-	/**
-	 * 
-	 * */
-	
 	
 	
 	@Override

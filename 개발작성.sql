@@ -81,7 +81,7 @@
         ;
         
         
-        -- 회원 삽입
+        -- 회원 강제 삽입
         
         INSERT INTO
 		USER_INFO
@@ -158,5 +158,56 @@
         WHERE USER_ID = 'admin'
         ;
         
+        -- 회원 전체 조회
+        SELECT
+        USER_ID
+		,USER_PW
+		,USER_NAME
+		,USER_PHONE1
+		,USER_PHONE2
+		,USER_PHONE3
+		,USER_ADDR1
+		,USER_ADDR2
+		,USER_COMPANY
+        FROM USER_INFO
+        ;
+        
+        
+        
+        -- 회원 삽입 쿼리
+        
+         INSERT INTO
+		USER_INFO
+		(USER_ID
+		,USER_PW
+		,USER_NAME
+		,USER_PHONE1
+		,USER_PHONE2
+		,USER_PHONE3
+		,USER_ADDR1
+		,USER_ADDR2
+		,USER_COMPANY
+		,CREATOR
+		,CREATE_TIME
+		,MODIFIER
+		,MODIFIED_TIME
+		)
+		VALUES
+		(
+		'admin'
+        ,'asdfqwer'
+        ,'관리자'
+		,'010'
+        ,'1111'
+        ,'2222'
+        ,'123-123'
+        ,'아오 삽입힘들어'
+        ,'천상계'
+		,'SYSTEM'
+		,TO_CHAR(SYSDATE)
+		,'SYSTEM'
+		,TO_CHAR(SYSDATE)
+		)
+        ;
         
         

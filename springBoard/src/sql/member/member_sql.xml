@@ -22,18 +22,108 @@
 	<insert id="memberInsert"
 		parameterType="com.spring.member.vo.MemberVo">
 
+
+		INSERT INTO
+		USER_INFO
+		(USER_ID
+		,USER_PW
+		,USER_NAME
+		,USER_PHONE1
+		,USER_PHONE2
+		,USER_PHONE3
+		<if test="userAddr1 != null">
+		,USER_ADDR1
+		</if>
+		<if test="userAddr2 != null">
+		,USER_ADDR2
+		</if>
+		<if test="userCompany != null">
+		,USER_COMPANY
+		</if>
+		,CREATOR
+		,CREATE_TIME
+		,MODIFIER
+		,MODIFIED_TIME
+		)
+		VALUES
+		(
+		#{userId}
+		,#{userPwd}
+		,#{userName}
+		,#{userPhone1}
+		,#{userPhone2}
+		,#{userPhone3}
+		<if test="userAddr1 != null">
+		,#{userAddr1}
+		</if>
+		<if test="userAddr2 != null">
+		,#{userAddr2}
+		</if>
+		<if test="userCompany != null">
+		,#{userCompany}
+		</if>
+		,'SYSTEM'
+		,TO_CHAR(SYSDATE)
+		,'SYSTEM'
+		,TO_CHAR(SYSDATE)
+		)
+
+
 	</insert>
 
 
-	<select id="memberCheckId" parameterType="String" resultType="Integer">
-		SELECT COUNT(*)
+	<select id="memberCheckId" parameterType="String"
+		resultType="String">
+		SELECT USER_NAME
 		FROM USER_INFO
 		WHERE USER_ID = #{userId}
 	</select>
 
 
+	<select id="memberSelectAll" resultMap="memberVo">
+
+		SELECT
+		USER_ID
+		,USER_PW
+		,USER_NAME
+		,USER_PHONE1
+		,USER_PHONE2
+		,USER_PHONE3
+		,USER_ADDR1
+		,USER_ADDR2
+		,USER_COMPANY
+		FROM USER_INFO
+
+	</select>
+	
+		<select id="memberSelectOne" resultMap="memberVo">
+
+		SELECT
+		USER_ID
+		,USER_PW
+		,USER_NAME
+		,USER_PHONE1
+		,USER_PHONE2
+		,USER_PHONE3
+		,USER_ADDR1
+		,USER_ADDR2
+		,USER_COMPANY
+		FROM USER_INFO
+		WHERE USER_ID = #{userId}
+
+	</select>
 
 
+	<select id="memberSelect"
+		parameterType="com.spring.board.vo.BoardVo" resultType="Integer">
+
+		SELECT
+		COUNT(*)
+		FROM USER_INFO
+		WHERE USER_ID = #{userId}
+		AND USER_PW = #{userPwd}
+
+	</select>
 
 
 

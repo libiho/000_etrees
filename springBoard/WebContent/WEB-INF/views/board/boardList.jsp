@@ -26,37 +26,46 @@
 
 </head>
 <script type="text/javascript">
-$j(document).ready(function(){
-	
-	
-	$j("#boardSearch").on("click",function(){
-		
-		var type = $j('input[name=boardType]').val();
-	
-		
-		$j.ajax({
-		    url : "/board/boardList.do",
-		    dataType: "json",
-		    type: "GET",
-		    data : type,
-		    contentType: "application/json",
-		    success: function(data, textStatus, jqXHR)
-		    {
-		    },
-		    error: function (jqXHR, textStatus, errorThrown)
-		    {
-		    	console.log("왜 에러가 나는지는 모르겠는데 납니다요");
-		    }
+	$j(document).ready(function() {
+
+		$j("#boardSearch").on("click", function() {
+
+			var type = $j('input[name=boardType]').val();
+
+			$j.ajax({
+				url : "/board/boardList.do",
+				dataType : "json",
+				type : "GET",
+				data : type,
+				contentType : "application/json",
+				success : function(data, textStatus, jqXHR) {
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					console.log("왜 에러가 나는지는 모르겠는데 납니다요");
+				}
+			});
 		});
 	});
-});
 </script>
 <body>
 	<table align="center">
 
 		<tr>
-			<td><a href="/member/memberLogin.do">login</a> <a
-				href="/member/memberInsert.do">join</a></td>
+			<c:choose>
+
+				<c:when test="${ empty loginUser }">
+					<td><a href="/member/memberLogin.do">login</a> <a
+						href="/member/memberInsert.do">join</a></td>
+
+				</c:when>
+				<c:otherwise>
+					<td>${loginUser}</td>
+				</c:otherwise>
+
+
+			</c:choose>
+			
+
 			<td align="right">total : ${totalCnt}</td>
 		</tr>
 
@@ -87,10 +96,30 @@ $j(document).ready(function(){
 
 								</c:when>
 
+								<c:when test="${list.boardType==2}">
+
+									<td align="center">Q&A</td>
+									<td align="center">${list.boardNum}</td>
+									<td><a
+										href="/board/${list.boardType}/${list.boardNum}/boardView.do?pageNo=${pageNo}">${list.boardTitle}</a>
+									</td>
+
+								</c:when>
+
+								<c:when test="${list.boardType==3}">
+
+									<td align="center">익명</td>
+									<td align="center">${list.boardNum}</td>
+									<td><a
+										href="/board/${list.boardType}/${list.boardNum}/boardView.do?pageNo=${pageNo}">${list.boardTitle}</a>
+									</td>
+
+								</c:when>
+
 
 
 								<c:otherwise>
-									<td align="center">@@@@@@@@@@@@@</td>
+									<td align="center">자유</td>
 									<td align="center">${list.boardNum}</td>
 									<td><a
 										href="/board/${list.boardType}/${list.boardNum}/boardView.do?pageNo=${pageNo}">${list.boardTitle}</a>
@@ -105,7 +134,11 @@ $j(document).ready(function(){
 			</td>
 		</tr>
 		<tr>
-			<td align="right" colspan="2"><a href="/board/boardWrite.do">글쓰기</a></td>
+			<td align="right" colspan="2"><a href="/board/boardWrite.do">글쓰기</a>
+			<c:if test="${not empty loginUser }">
+			<a href="/member/memberLogout.do">로그아웃</a>
+			</c:if>
+			</td>
 		</tr>
 		<tr>
 			<td>
@@ -133,25 +166,24 @@ $j(document).ready(function(){
 
 
 	<script type="text/javascript">
+		function checkboxGroup(currentCheckbox) {
+			const checkboxes = document.getElementsByName("boardType");
+			let checkedCount = 0;
 
-function checkboxGroup(currentCheckbox) {
-	  const checkboxes = document.getElementsByName("boardType");
-	  let checkedCount = 0;
-	  
-	  for (let i = 0; i < checkboxes.length; i++) {
-	    if (checkboxes[i].checked) {
-	      checkedCount++;
-	      if (checkboxes[i] !== currentCheckbox) {
-	        checkboxes[i].checked = false;
-	      }
-	    }
-	  }
-	  
-	  if (checkedCount === 0) {
-	    currentCheckbox.checked = true;
-	  }
-	}
-</script>
+			for (let i = 0; i < checkboxes.length; i++) {
+				if (checkboxes[i].checked) {
+					checkedCount++;
+					if (checkboxes[i] !== currentCheckbox) {
+						checkboxes[i].checked = false;
+					}
+				}
+			}
+
+			if (checkedCount === 0) {
+				currentCheckbox.checked = true;
+			}
+		}
+	</script>
 
 
 
