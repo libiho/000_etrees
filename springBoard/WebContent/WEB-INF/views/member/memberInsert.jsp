@@ -76,12 +76,12 @@ $j(document).ready(function(){
 <body>
 	<br>
 
-		<form class="memberInsertForm">
-	<table align="center">
+	<form class="memberInsertForm">
+		<table align="center">
 
-		<tr>
-			<td align="left" colspan="2"><a href="/board/boardList.do">List</a></td>
-		</tr>
+			<tr>
+				<td align="left" colspan="2"><a href="/board/boardList.do">List</a></td>
+			</tr>
 
 			<tr>
 				<td>
@@ -89,19 +89,17 @@ $j(document).ready(function(){
 
 						<td width="150px" class="tCenter">id</td>
 						<td width="300px"><input type="text" id="userId"
-							name="userId" required>
-							<input type="button" id="checkId" value="중복확인">
-							
-							<div id="checkResult" style="font-size: 0.8em; display: none">
-							</td>
-							
+							name="userId" required> <input type="button" id="checkId"
+							value="중복확인">
+
+							<div id="checkResult" style="font-size: 0.8em; display: none"></td>
+
 						</tr>
 						<tr>
 							<td class="tCenter">pw</td>
 							<td><input type="password" id="userPwd" name="userPwd"
 								required>
-							<div id="numCheck" style="font-size: 0.8em; display: none">
-							</td>
+								<div id="numCheck" style="font-size: 0.8em; display: none"></td>
 						</tr>
 						<tr>
 							<td class="tCenter">pw check</td>
@@ -109,36 +107,26 @@ $j(document).ready(function(){
 								<div id="pwdCheckResult" style="font-size: 0.8em; display: none"></td>
 						</tr>
 						<tr>
-							<td class="tCenter" >name</td>
-							<td><input type="text" id="userName" name="userName" required></td>
+							<td class="tCenter">name</td>
+							<td><input type="text" id="userName" name="userName"
+								required></td>
 						</tr>
 						<tr>
 							<td class="tCenter" required>phone</td>
 
-
-							<td>
-							
-							<select name="userPhone1" id="firstPhone">
-									
-<!--  ### 겹치는거 말고 하나씩만 나오게! 중복 제거 -->									
-									<c:forEach items="${memberList}" var="list">
-										<c:choose>
-											<c:when test="${list.userPhone1==010}">
-												<option value="${list.userPhone1}" selected>${list.userPhone1}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${list.userPhone1}">${list.userPhone1}</option>
-											</c:otherwise>
-										</c:choose>
-
+<!-- ### 4글자 이하는 입력안되게 설정 -->
+							<td><select name="userPhone1" id="firstPhone">
+									<c:forEach items="${uniquePhoneList}" var="phone">
+										<option value="${phone.codeName}" >${phone.codeName}</option>
 									</c:forEach>
-							</select> -<input  id="userPhone2"
-								name="userPhone2" class="onlyNum4" style="width: 50px" required>-<input
-							id="userPhone3" class="onlyNum4" name="userPhone3" style="width: 50px" required></td>
+							</select> -<input id="userPhone2" name="userPhone2" class="onlyNum4"
+								style="width: 50px" required>-<input id="userPhone3"
+								class="onlyNum4" name="userPhone3" style="width: 50px" required></td>
 						</tr>
 						<tr>
 							<td class="tCenter">postNo</td>
-							<td><input type="text" id="postNo" name="postNo" placeholder="숫자로만 입력해주세요"></td>
+							<td><input type="text" id="postNo" name="postNo"
+								placeholder="숫자로만 입력해주세요"></td>
 						</tr>
 						<tr>
 							<td class="tCenter">address</td>
@@ -156,13 +144,13 @@ $j(document).ready(function(){
 						id="userInsertBtn">join</button></td>
 
 			</tr>
-	</table>
+		</table>
 	</form>
 
 
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 //주소 숫자 지정
 $j(function () {

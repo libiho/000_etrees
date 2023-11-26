@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.board.vo.BoardVo;
+import com.spring.board.vo.CodeVo;
 import com.spring.board.vo.PageVo;
 import com.spring.board.vo.TypeVo;
 
@@ -25,6 +26,15 @@ public interface BoardDao {
 	public List<BoardVo> selectBoardListSearch(TypeVo typeVo) throws Exception;
 
 	public int selectBoardCntSearch(TypeVo typeVo) throws Exception;
+
+
+	public List<CodeVo> selectBoardType() throws Exception;
+
+
+	public List<BoardVo> selectBoardList(TypeVo typeVo) throws Exception;
+
+
+	public int selectBoardCnt(TypeVo typeVo) throws Exception;
 
 
 

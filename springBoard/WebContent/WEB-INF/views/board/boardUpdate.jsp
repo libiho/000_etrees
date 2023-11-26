@@ -29,7 +29,7 @@
 					
 					alert("메세지:"+data.success);
 					
-					location.href = "/board/"+ $type+ "/" + $num + "/boardView.do?pageNo="+$num;
+					location.href = "/board/boardList.do";
 			    },
 			    error: function (jqXHR, textStatus, errorThrown)
 			    {
@@ -52,7 +52,7 @@
 <table align="center">
 	<tr>
 			<td align="right">
-			<input id="submit" type="button" value="등록 ">
+		
 			</td>
 		</tr>
 	<tr>
@@ -80,6 +80,7 @@
 					Writer
 					</td>
 					<td>
+					${board.creator}
 					</td>
 				</tr>
 			</table>
@@ -92,8 +93,8 @@
 	
 			<tr>
 		<td align="right">
-			<a href="/board/boardList.do">List 다시보기</a>
-		</td>
+			<a href="/board/boardList.do">List</a>
+		 <input id="submit" type="button" value="등록 "></td>
 	</tr>
 		
 		

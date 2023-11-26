@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.board.vo.CodeVo;
 import com.spring.member.dao.MemberDao;
 import com.spring.member.service.MemberService;
 import com.spring.member.vo.MemberVo;
@@ -41,6 +42,16 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public MemberVo memberSelectOne(String userId) throws Exception {
 		return memberDao.memberSelectOne(userId);
+	}
+
+	@Override
+	public List<CodeVo> selectPhoneType() throws Exception {
+		return memberDao.selectPhoneType();
+	}
+
+	@Override
+	public MemberVo memberCheckId(MemberVo memberVo) throws Exception {
+		return memberDao.memberCheckId(memberVo);
 	}
 	
 	

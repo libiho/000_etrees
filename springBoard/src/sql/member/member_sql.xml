@@ -16,7 +16,13 @@
 		<result property="modifier" column="MODIFIER" />
 	</resultMap>
 
-
+<resultMap type="com.spring.board.vo.CodeVo" id="codeVo">
+		<result property="codeType" column="CODE_TYPE" />
+		<result property="codeId" column="CODE_ID" />
+		<result property="codeName" column="CODE_NAME" />
+		<result property="creator" column="CREATOR" />
+		<result property="modifier" column="MODIFIER" />
+	</resultMap>
 
 
 	<insert id="memberInsert"
@@ -70,6 +76,20 @@
 
 
 	</insert>
+	
+	
+	
+	
+		<select id="memberPhoneType"  resultMap="codeVo">
+
+		SELECT 
+		CODE_ID
+		,CODE_NAME
+       FROM COM_CODE
+       WHERE CODE_TYPE = 'phone'
+
+	</select>
+	
 
 
 	<select id="memberCheckId" parameterType="String"
@@ -96,7 +116,7 @@
 
 	</select>
 	
-		<select id="memberSelectOne" resultMap="memberVo">
+		<select id="memberSelect" resultMap="memberVo">
 
 		SELECT
 		USER_ID
@@ -110,11 +130,12 @@
 		,USER_COMPANY
 		FROM USER_INFO
 		WHERE USER_ID = #{userId}
+		AND USER_PW = #{userPwd}
 
 	</select>
 
 
-	<select id="memberSelect"
+	<select id="memberSelectCount"
 		parameterType="com.spring.board.vo.BoardVo" resultType="Integer">
 
 		SELECT

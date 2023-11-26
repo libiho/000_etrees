@@ -156,6 +156,7 @@
         SELECT COUNT(*)
         FROM USER_INFO
         WHERE USER_ID = 'admin'
+        and user_PW = 'asdfqwer'
         ;
         
         -- 회원 전체 조회
@@ -211,3 +212,113 @@
         ;
         
         
+        
+   -- 폰 앞번호 검색 쿼리
+   
+   select DISTINCT user_phone1
+   from user_info
+   ;
+        
+    -- 타입 중복 제거
+    select distinct board_type
+    from board
+    ;
+        
+    -- 글 작성자까지 조회하는 게시글
+    SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+        ,creator
+		FROM
+		BOARD
+		WHERE
+		BOARD_TYPE = 1
+        ;
+       
+       
+       -- com code 테이블 - 게시글ㄹ타입 조회
+       
+       select 
+       code_id
+       
+       ,code_name
+       from com_code
+       where code_type = 'menu'
+       ;
+       
+             -- com code 테이블 - 폰번호 조회
+       
+       select 
+       code_id
+       
+       ,code_name
+       from com_code
+       where code_type = 'phone'
+       ;
+       
+     
+     -- 게시판 조회 + com 테이블 합치기
+     
+     SELECT
+		BOARD_TYPE
+        ,CODE_NAME
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,TOTAL_CNT
+		FROM
+		(
+		SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,ROW_NUMBER()
+		OVER(ORDER BY
+		BOARD_NUM DESC) AS NUMROW
+		,COUNT(*) OVER() AS TOTAL_CNT
+		FROM
+		BOARD
+		)
+        JOIN COM_CODE on (BOARD_TYPE = CODE_ID)
+        ;
+        
+        
+        
+        SELECT NVL(TO_NUMBER(MAX(BOARD_NUM)+1),1)
+		FROM BOARD
+		;
+        
+        
+        -- 게시판 상세 조회
+        
+		 SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,TOTAL_CNT
+		,CREATOR
+		FROM
+		(
+		SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,ROW_NUMBER()
+		OVER(ORDER BY
+		BOARD_NUM DESC) AS NUMROW
+		,COUNT(*) OVER() AS TOTAL_CNT
+        ,creator
+		FROM
+		BOARD
+		)
+        ;
+        
+        
+        select creator
+        from board
+        ;

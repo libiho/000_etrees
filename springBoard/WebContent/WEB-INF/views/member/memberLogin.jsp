@@ -42,10 +42,7 @@
 	    $j("#submitBtn").on("click", function() {
 	    	
 	    	$j(this).prop('disabled', true);
-	    	/*
-	          var userId = $j('#userId').val();
-	        var userPwd = $j('#userPwd').val();
-	        */	       
+	         
 	       var $frm = $j('.loginCheck :input');
 			var param = $frm.serialize();
 
@@ -55,17 +52,18 @@
 	            type: "POST",
 	            data: 
 	            	param
-	            	/*  
-	            {
-	                "userId": userId,
-	                "userPwd": userPwd
-	            }
-	            	*/
+	           
 	            ,
 	            success: function(data, textStatus, jqXHR) {
-	                alert("로그인 성공");
-	                alert("메세지:" + data.success);
-	                location.href = "/board/boardList.do";
+	             
+	                
+	                if (data.success === 'Y') {
+	                    alert("로그인 성공");
+	                    location.href = "/board/boardList.do";
+	                } else {
+	                    alert("로그인 실패 다시 입력해주십시오");
+	                }
+	                
 	            },
 	            error: function(jqXHR, textStatus, errorThrown) {
 	                alert("로그인 실패");

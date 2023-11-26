@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.spring.board.dao.BoardDao;
 import com.spring.board.service.boardService;
 import com.spring.board.vo.BoardVo;
+import com.spring.board.vo.CodeVo;
 import com.spring.board.vo.PageVo;
 import com.spring.board.vo.TypeVo;
 
@@ -68,6 +69,33 @@ public class boardServiceImpl implements boardService{
 	public int selectBoardCntSearch(TypeVo typeVo) throws Exception {
 		// TODO Auto-generated method stub
 		return boardDao.selectBoardCntSearch(typeVo);
+	}
+
+
+
+
+
+	@Override
+	public List<CodeVo> selectBoardType() throws Exception {
+		return boardDao.selectBoardType();
+	}
+
+
+
+
+
+	@Override
+	public List<BoardVo> selectBoardList(TypeVo typeVo) throws Exception {
+		return boardDao.selectBoardList(typeVo);
+	}
+
+
+
+
+
+	@Override
+	public int selectBoardCnt(TypeVo typeVo) throws Exception {
+		return boardDao.selectBoardCnt(typeVo);
 	}
 
 	

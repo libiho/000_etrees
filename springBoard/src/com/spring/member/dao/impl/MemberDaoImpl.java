@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.board.vo.CodeVo;
 import com.spring.member.dao.MemberDao;
 import com.spring.member.vo.MemberVo;
 
@@ -37,13 +38,25 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public int memberSelect(MemberVo memberVo) throws Exception {
-		return sqlSession.selectOne("member.memberSelect",memberVo);
+		return sqlSession.selectOne("member.memberSelectCount",memberVo);
 	}
 
 
 	@Override
 	public MemberVo memberSelectOne(String userId) throws Exception {
 		return sqlSession.selectOne("member.memberSelectOne",userId);
+	}
+
+
+	@Override
+	public List<CodeVo> selectPhoneType() throws Exception {
+		return sqlSession.selectList("member.memberPhoneType");
+	}
+
+
+	@Override
+	public MemberVo memberCheckId(MemberVo memberVo) throws Exception {
+		return sqlSession.selectOne("member.memberSelect",memberVo);
 	}
 	
 }

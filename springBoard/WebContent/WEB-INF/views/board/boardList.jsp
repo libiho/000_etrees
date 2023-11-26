@@ -33,7 +33,7 @@
 			var type = $j('input[name=boardType]').val();
 
 			$j.ajax({
-				url : "/board/boardList.do",
+				url : "/board/boardListSearch.do",
 				dataType : "json",
 				type : "GET",
 				data : type,
@@ -45,6 +45,7 @@
 				}
 			});
 		});
+
 	});
 </script>
 <body>
@@ -59,12 +60,12 @@
 
 				</c:when>
 				<c:otherwise>
-					<td>${loginUser}</td>
+					<td>${userName}</td>
 				</c:otherwise>
 
 
 			</c:choose>
-			
+
 
 			<td align="right">total : ${totalCnt}</td>
 		</tr>
@@ -82,11 +83,11 @@
 						<tr>
 
 							<!-- ### type별 이름 다르게 조건 -->
-
+							<!-- ### code테이블하고 조인해서 boardList.jsp 반복문 코드 줄이기  boardSearch -->
 
 							<c:choose>
 
-								<c:when test="${list.boardType==1}">
+								<c:when test="${list.boardType=='a01'}">
 
 									<td align="center">일반</td>
 									<td align="center">${list.boardNum}</td>
@@ -96,7 +97,7 @@
 
 								</c:when>
 
-								<c:when test="${list.boardType==2}">
+								<c:when test="${list.boardType=='a02'}">
 
 									<td align="center">Q&A</td>
 									<td align="center">${list.boardNum}</td>
@@ -106,7 +107,7 @@
 
 								</c:when>
 
-								<c:when test="${list.boardType==3}">
+								<c:when test="${list.boardType=='a03'}">
 
 									<td align="center">익명</td>
 									<td align="center">${list.boardNum}</td>
@@ -116,18 +117,17 @@
 
 								</c:when>
 
-
-
 								<c:otherwise>
-									<td align="center">자유</td>
+
+									<td align="center">익명</td>
 									<td align="center">${list.boardNum}</td>
 									<td><a
 										href="/board/${list.boardType}/${list.boardNum}/boardView.do?pageNo=${pageNo}">${list.boardTitle}</a>
 									</td>
+
 								</c:otherwise>
+
 							</c:choose>
-
-
 						</tr>
 					</c:forEach>
 				</table>
@@ -135,30 +135,50 @@
 		</tr>
 		<tr>
 			<td align="right" colspan="2"><a href="/board/boardWrite.do">글쓰기</a>
-			<c:if test="${not empty loginUser }">
-			<a href="/member/memberLogout.do">로그아웃</a>
-			</c:if>
-			</td>
+				<c:if test="${not empty loginUser }">
+					<a href="/member/memberLogout.do">로그아웃</a>
+				</c:if></td>
 		</tr>
 		<tr>
 			<td>
-				<form action="/board/boardList.do" method="get">
-					<label> <input type="checkbox" name="boardType" value=""
-						checked onchange="checkboxGroup(this)"> 전체
-					</label> <label><input type="checkbox" name="boardType" value="1"
+				<form method="get">
+					<label> <input type="checkbox" name="boardType"
+						onchange="checkboxGroup(this)"> 전체
+					</label> <label><input type="checkbox" name="boardType" value="a01"
 						onchange="checkboxGroup(this)"> 일반 </label> <label><input
-						type="checkbox" name="boardType" value="2"
+						type="checkbox" name="boardType" value="a02"
 						onchange="checkboxGroup(this)"> Q&A </label> <label><input
-						type="checkbox" name="boardType" value="3"
+						type="checkbox" name="boardType" value="a03"
 						onchange="checkboxGroup(this)"> 익명 </label> <label><input
-						type="checkbox" name="boardType" value="4"
+						type="checkbox" name="boardType" value="a04"
 						onchange="checkboxGroup(this)"> 자유 </label>
 					<button type="submit" id="boardSearch">조회</button>
 				</form>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">### 페이징 처리</td>
+
+
+			<!-- ### 페이징 처리 -->
+
+
+			<td>
+
+				<div align="center">
+					<c:forEach begin="1"
+						end="${totalCnt / 5 + (totalCnt % 5 > 0 ? 1 : 0)}" var="i">
+						<a href="/board/boardList.do?pageNo=${i}">${i}</a>
+					</c:forEach>
+				</div>
+
+
+
+			</td>
+
+
+
+
+
 		</tr>
 
 	</table>

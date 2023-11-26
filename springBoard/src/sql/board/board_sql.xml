@@ -7,19 +7,42 @@
 		<result property="boardNum" column="BOARD_NUM" />
 		<result property="boardTitle" column="BOARD_TITLE" />
 		<result property="boardComment" column="BOARD_COMMENT" />
+		<result property="creator" column="CREATOR" />
+	</resultMap>
+
+	<resultMap type="com.spring.board.vo.CodeVo" id="codeVo">
+		<result property="codeType" column="CODE_TYPE" />
+		<result property="codeId" column="CODE_ID" />
+		<result property="codeName" column="CODE_NAME" />
+		<result property="creator" column="CREATOR" />
+		<result property="modifier" column="MODIFIER" />
+	</resultMap>
+	
+	
+	<resultMap type="com.spring.board.vo.JoinVo" id="joinVo">
+		<result property="boardType" column="BOARD_TYPE" />
+		<result property="boardNum" column="BOARD_NUM" />
+		<result property="boardTitle" column="BOARD_TITLE" />
+		<result property="boardComment" column="BOARD_COMMENT" />
+		<result property="creator" column="CREATOR" />
+		<result property="codeType" column="CODE_TYPE" />
+		<result property="codeId" column="CODE_ID" />
+		<result property="codeName" column="CODE_NAME" />
 	</resultMap>
 
 
 
+	<select id="boardSelect"
+		parameterType="com.spring.board.vo.BoardVo" resultMap="boardVo">
 
-	<select id="boardSearch"
-		parameterType="com.spring.board.vo.TypeVo" resultMap="boardVo">
+
 		SELECT
 		BOARD_TYPE
 		,BOARD_NUM
 		,BOARD_TITLE
 		,BOARD_COMMENT
 		,TOTAL_CNT
+		,CREATOR
 		FROM
 		(
 		SELECT
@@ -27,23 +50,67 @@
 		,BOARD_NUM
 		,BOARD_TITLE
 		,BOARD_COMMENT
-		,ROW_NUMBER() OVER(ORDER BY
+		,ROW_NUMBER()
+		OVER(ORDER
+		BY
 		BOARD_NUM DESC) AS NUMROW
 		,COUNT(*) OVER() AS TOTAL_CNT
+		,CREATOR
 		FROM
 		BOARD
 		)
 		WHERE
-		NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
-		 <if test="boardType != null">
-		AND BOARD_TYPE =
-		#{boardType}
+		NUMROW BETWEEN (#{pageNo}-1)* 5 + 1 AND
+		(#{pageNo})*5
+	</select>
+
+
+	<select id="boardSearch"
+		parameterType="com.spring.board.vo.TypeVo" resultMap="boardVo">
+
+
+		SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,TOTAL_CNT
+		,CREATOR
+		FROM
+		(
+		SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,ROW_NUMBER()
+		OVER(ORDER BY
+		BOARD_NUM DESC) AS NUMROW
+		,COUNT(*) OVER() AS
+		TOTAL_CNT
+		,CREATOR
+		FROM
+		BOARD
+		)
+		WHERE
+		NUMROW BETWEEN (#{pageNo}-1)* 5 + 1
+		AND
+		(#{pageNo})*5
+		<if test="boardType != null">
+			AND BOARD_TYPE =
+			#{boardType}
 		</if>
 	</select>
 
 
 
-
+	<select id="boardSelectTotal" parameterType="Integer"
+		resultType="Integer">
+		SELECT
+		COUNT(*) AS TOTAL_CNT
+		FROM
+		BOARD
+	</select>
 
 
 
@@ -54,9 +121,6 @@
 		COUNT(*) AS TOTAL_CNT
 		FROM
 		BOARD
-		<if test="boardType != null">
-			WHERE BOARD_TYPE = #{boardType}
-		</if>
 	</select>
 
 
@@ -66,8 +130,23 @@
 		COUNT(*) AS TOTAL_CNT
 		FROM
 		BOARD
-		WHERE BOARD_TYPE =
-		#{boardType}
+		<if test="boardType != null">
+			AND BOARD_TYPE =
+			#{boardType}
+		</if>
+	</select>
+
+
+
+	<select id="boardType" resultMap="codeVo">
+
+		SELECT
+		CODE_ID
+		,CODE_NAME
+		FROM
+		COM_CODE
+		WHERE CODE_TYPE = 'menu'
+
 	</select>
 
 
@@ -79,6 +158,7 @@
 		,BOARD_NUM
 		,BOARD_TITLE
 		,BOARD_COMMENT
+		,CREATOR
 		FROM
 		BOARD
 		WHERE
@@ -100,14 +180,13 @@
 		,MODIFIED_TIME
 		)
 		VALUES
-		('1'
+		(#{boardType}
 		,(SELECT NVL(TO_NUMBER(MAX(BOARD_NUM)+1),1)
 		FROM BOARD
-		WHERE BOARD_TYPE
-		= '1')
+		)
 		,#{boardTitle}
 		,#{boardComment}
-		,'SYSTEM'
+		,#{creator}
 		,TO_CHAR(SYSDATE)
 		,'SYSTEM'
 		,TO_CHAR(SYSDATE)

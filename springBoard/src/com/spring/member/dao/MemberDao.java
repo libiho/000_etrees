@@ -2,6 +2,7 @@ package com.spring.member.dao;
 
 import java.util.List;
 
+import com.spring.board.vo.CodeVo;
 import com.spring.member.vo.MemberVo;
 
 public interface MemberDao {
@@ -15,5 +16,9 @@ public interface MemberDao {
 	public int memberSelect(MemberVo memberVo) throws Exception;
 
 	public MemberVo memberSelectOne(String userId) throws Exception;
+
+	public List<CodeVo> selectPhoneType()  throws Exception;
+
+	public MemberVo memberCheckId(MemberVo memberVo) throws Exception;
 
 }

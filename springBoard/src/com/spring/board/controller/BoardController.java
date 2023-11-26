@@ -1,14 +1,10 @@
 package com.spring.board.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +13,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.board.HomeController;
 import com.spring.board.service.boardService;
 import com.spring.board.vo.BoardVo;
-import com.spring.board.vo.PageVo;
+import com.spring.board.vo.CodeVo;
 import com.spring.board.vo.TypeVo;
 import com.spring.common.CommonUtil;
+import com.spring.common.model.vo.PageInfo;
+import com.spring.common.template.Pagination;
 
 @Controller
 public class BoardController {
@@ -40,10 +36,37 @@ public class BoardController {
 
 	
 	
+//	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
+//	public String boardList(Locale locale, Model model, TypeVo typeVo) throws Exception {
+//
+//		
+//		List<BoardVo> boardList = new ArrayList<BoardVo>();
+//
+//		int page = 1;
+//		int totalCnt = 0;
+//
+//		if (typeVo.getPageNo() == 0) {
+//			typeVo.setPageNo(page);
+//		}
+//		
+//	
+//		boardList = boardService.selectBoardListSearch(typeVo);
+//		totalCnt = boardService.selectBoardCntSearch(typeVo);
+//		
+//
+//		model.addAttribute("boardList", boardList);
+//		model.addAttribute("totalCnt", totalCnt);
+//		model.addAttribute("pageNo", page);
+//
+//		return "board/boardList";
+//	}
+	
+	
+	
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
 	public String boardList(Locale locale, Model model, TypeVo typeVo) throws Exception {
 
-		
+		System.out.println("ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ");
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
 
 		int page = 1;
@@ -63,7 +86,38 @@ public class BoardController {
 		model.addAttribute("pageNo", page);
 
 		return "board/boardList";
+	}	
+
+	
+	@RequestMapping(value = "/board/boardListSearch.do", method = RequestMethod.GET)
+	public String boardListSearch(Locale locale, Model model, TypeVo typeVo) throws Exception {
+
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		List<BoardVo> boardList = new ArrayList<BoardVo>();
+
+		int page = 1;
+		int totalCnt = 0;
+
+		if (typeVo.getPageNo() == 0) {
+			typeVo.setPageNo(page);
+		}
+		
+	
+		boardList = boardService.selectBoardList(typeVo);
+		totalCnt = boardService.selectBoardCnt(typeVo);
+		
+
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("totalCnt", totalCnt);
+		model.addAttribute("pageNo", page);
+
+		return "board/boardList";
 	}
+	
+	
+
+	
+	
 	
 	
 	
@@ -81,6 +135,7 @@ public class BoardController {
 		model.addAttribute("boardType", boardType);
 		model.addAttribute("boardNum", boardNum);
 		model.addAttribute("board", boardVo);
+		
 
 		return "board/boardView";
 	}
@@ -97,6 +152,13 @@ public class BoardController {
 	@RequestMapping(value = "/board/boardWrite.do", method = RequestMethod.GET)
 	public String boardWrite(Locale locale, Model model) throws Exception {
 
+
+		List<CodeVo> boardType = new ArrayList<CodeVo>();
+		
+		boardType = boardService.selectBoardType();
+		
+		model.addAttribute("boardType",boardType);
+		
 		return "board/boardWrite";
 	}
 

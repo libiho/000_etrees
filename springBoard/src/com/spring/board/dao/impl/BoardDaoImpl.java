@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.board.dao.BoardDao;
 import com.spring.board.vo.BoardVo;
+import com.spring.board.vo.CodeVo;
 import com.spring.board.vo.PageVo;
 import com.spring.board.vo.TypeVo;
 
@@ -60,6 +61,25 @@ public class BoardDaoImpl implements BoardDao{
 	public int selectBoardCntSearch(TypeVo typeVo) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("board.boardSearchTotal",typeVo);
+	}
+
+
+	@Override
+	public List<CodeVo> selectBoardType() throws Exception {
+	
+		return sqlSession.selectList("board.boardType");
+	}
+
+
+	@Override
+	public List<BoardVo> selectBoardList(TypeVo typeVo) throws Exception {
+		return sqlSession.selectList("board.boardSelect",typeVo);
+	}
+
+
+	@Override
+	public int selectBoardCnt(TypeVo typeVo) throws Exception {
+		return sqlSession.selectOne("board.boardSelectTotal",typeVo);
 	}
 	
 	

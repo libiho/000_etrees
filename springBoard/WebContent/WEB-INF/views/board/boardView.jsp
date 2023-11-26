@@ -22,7 +22,7 @@
 					</tr>
 					<tr>
 						<td align="center">Writer</td>
-						<td></td>
+						<td>${board.creator}</td>
 					</tr>
 
 
@@ -35,12 +35,11 @@
 		</tr>
 
 		<tr>
+			<c:if test="${userId eq board.creator }">
+				<td align="right"><button onclick="fromSubmit(1);">수정</button></td>
 
-			<td align="right"><button onclick="fromSubmit(1);">수정</button></td>
-		</tr>
-
-		<tr>
-			<td align="right"><button onclick="fromSubmit(2);">삭제</button></td>
+				<td align="right"><button onclick="fromSubmit(2);">삭제</button></td>
+			</c:if>
 
 
 		</tr>
