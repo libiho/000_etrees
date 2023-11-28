@@ -17,8 +17,8 @@
 		<result property="creator" column="CREATOR" />
 		<result property="modifier" column="MODIFIER" />
 	</resultMap>
-	
-	
+
+
 	<resultMap type="com.spring.board.vo.JoinVo" id="joinVo">
 		<result property="boardType" column="BOARD_TYPE" />
 		<result property="boardNum" column="BOARD_NUM" />
@@ -91,15 +91,16 @@
 		,CREATOR
 		FROM
 		BOARD
+		<if test="boardType != null">
+			WHERE BOARD_TYPE =
+			#{boardType}
+		</if>
 		)
 		WHERE
 		NUMROW BETWEEN (#{pageNo}-1)* 5 + 1
 		AND
 		(#{pageNo})*5
-		<if test="boardType != null">
-			AND BOARD_TYPE =
-			#{boardType}
-		</if>
+
 	</select>
 
 
@@ -121,20 +122,14 @@
 		COUNT(*) AS TOTAL_CNT
 		FROM
 		BOARD
-	</select>
-
-
-	<select id="searchBoardTotal" parameterType="Integer"
-		resultType="Integer">
-		SELECT
-		COUNT(*) AS TOTAL_CNT
-		FROM
-		BOARD
 		<if test="boardType != null">
-			AND BOARD_TYPE =
+			WHERE BOARD_TYPE =
 			#{boardType}
 		</if>
 	</select>
+
+
+
 
 
 

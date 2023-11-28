@@ -22,7 +22,6 @@ public class boardServiceImpl implements boardService{
 	
 	@Override
 	public String selectTest() throws Exception {
-		// TODO Auto-generated method stub
 		return boardDao.selectTest();
 	}
 	
@@ -32,7 +31,6 @@ public class boardServiceImpl implements boardService{
 	
 	@Override
 	public BoardVo selectBoard(String boardType, int boardNum) throws Exception {
-		// TODO Auto-generated method stub
 		BoardVo boardVo = new BoardVo();
 		
 		boardVo.setBoardType(boardType);
@@ -43,7 +41,6 @@ public class boardServiceImpl implements boardService{
 	
 	@Override
 	public int boardInsert(BoardVo boardVo) throws Exception {
-		// TODO Auto-generated method stub
 		return boardDao.boardInsert(boardVo);
 	}
 	
@@ -61,13 +58,11 @@ public class boardServiceImpl implements boardService{
 
 	@Override
 	public List<BoardVo> selectBoardListSearch(TypeVo typeVo) throws Exception {
-		// TODO Auto-generated method stub
 		return boardDao.selectBoardListSearch(typeVo);
 	}
 
 	@Override
 	public int selectBoardCntSearch(TypeVo typeVo) throws Exception {
-		// TODO Auto-generated method stub
 		return boardDao.selectBoardCntSearch(typeVo);
 	}
 

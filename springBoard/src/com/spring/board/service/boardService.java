@@ -27,12 +27,9 @@ public interface boardService {
 
 	public int selectBoardCntSearch(TypeVo typeVo) throws Exception;
 
-
 	public List<CodeVo> selectBoardType() throws Exception;
 
-
 	public List<BoardVo> selectBoardList(TypeVo typeVo) throws Exception;
-
 
 	public int selectBoardCnt(TypeVo typeVo) throws Exception;
 

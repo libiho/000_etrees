@@ -26,27 +26,130 @@
 
 </head>
 <script type="text/javascript">
-	$j(document).ready(function() {
+	$j(document)
+			.ready(
+					function() {
 
-		$j("#boardSearch").on("click", function() {
+						$j("#boardSearchBtn")
+								.on(
+										"click",
+										function(event) {
 
-			var type = $j('input[name=boardType]').val();
+											event.preventDefault(); // 폼 전송 기본 동작 막기 -> 안하면 두번 controller 탐 
 
-			$j.ajax({
-				url : "/board/boardListSearch.do",
-				dataType : "json",
-				type : "GET",
-				data : type,
-				contentType : "application/json",
-				success : function(data, textStatus, jqXHR) {
-				},
-				error : function(jqXHR, textStatus, errorThrown) {
-					console.log("왜 에러가 나는지는 모르겠는데 납니다요");
-				}
-			});
-		});
+											var type = $j(
+													'input[name=boardType]:checked')
+													.val();
 
-	});
+											var urlAjax = "/board/boardListSearch.do";
+
+											$j("#boardSearch").prop("disabled",
+													true);
+
+										
+
+											$j
+													.ajax({
+														url : urlAjax,
+														dataType : "json",
+														type : "GET",
+														data : {
+															boardType : type
+														},
+														contentType : "application/json; charset=EUC-KR",
+														success : function(
+																data,
+																textStatus,
+																jqXHR) {
+
+															var boardList = data.boardList;
+															var boardType = data.boardType;
+															var totalCnt = data.totalCnt;
+															var pageNo = data.pageNo;
+
+															let value = "";
+															let codeName = "";
+
+															let tableBody = $j('#boardTable tbody')
+
+															for ( let i in boardList) {
+
+																for ( let a in boardType) {
+																	if (boardList[i].boardType === boardType[a].codeId) {
+																		codeName = boardType[a].codeName;
+																		btype = boardList[i].boardType
+																		break;
+																	}
+																}
+
+																value += "<tr>"
+																		+ "<td align='center'>"
+																		+ codeName
+																		+ "</td>"
+																		+ "<td>"
+																		+ boardList[i].boardNum
+																		+ "</td>"
+																		+ "<td> <a href='/board/"
+																		+ boardList[i].boardType
+																		+ "/"
+																		+ boardList[i].boardNum
+																		+ "/boardView.do?pageNo="
+																		+ pageNo
+																		+ "'>"
+																		+ boardList[i].boardTitle
+																		+ "</a></td>"
+																		+ "</tr>";
+															}
+
+															tableBody
+																	.html(value);
+
+															// 설정한 값에 따라 숫자 출력 
+															$j(
+																	"#totalCountArea")
+																	.html(
+																			"<td align='right'>total : "
+																					+ totalCnt
+																					+ "</td>");
+
+															updatePage(
+																	totalCnt,
+																	pageNo);
+
+														},
+														error : function(jqXHR,
+																textStatus,
+																errorThrown) {
+															console
+																	.log("왜 에러가 나는지는 모르겠는데 납니다요");
+														},
+														complete : function() {
+															// 요청 완료 후 버튼 다시 활성화
+															$j("#boardSearch")
+																	.prop(
+																			"disabled",
+																			false);
+														}
+													});
+										});
+
+					});
+
+	function updatePage(totalCnt, pageNo) {
+
+		var pageLinks = "";
+
+		var num = totalCnt / 5 + (totalCnt % 5 > 0 ? 1 : 0);
+
+		for (var i = 1; i <= num; i++) {
+
+			pageLinks += "<a href='/board/boardListSearch.do?pageNo=" + pageNo
+					+ "'>" + [ i ] + "</a> ";
+		}
+
+		$j("#pageLinksArea")
+				.html("<div align='center'>" + pageLinks + "</div>");
+	}
 </script>
 <body>
 	<table align="center">
@@ -67,69 +170,43 @@
 			</c:choose>
 
 
-			<td align="right">total : ${totalCnt}</td>
+			<td align="right" id="totalCountArea">total : ${totalCnt}</td>
 		</tr>
 
 
 		<tr>
 			<td colspan="2">
 				<table id="boardTable" border="1">
-					<tr>
-						<td class="leftTd">Type</td>
-						<td class="middleTd">No</td>
-						<td class="RightTd" align="center">Title</td>
-					</tr>
-					<c:forEach items="${boardList}" var="list">
+					<thead>
 						<tr>
-
-							<!-- ### type별 이름 다르게 조건 -->
-							<!-- ### code테이블하고 조인해서 boardList.jsp 반복문 코드 줄이기  boardSearch -->
-
-							<c:choose>
-
-								<c:when test="${list.boardType=='a01'}">
-
-									<td align="center">일반</td>
-									<td align="center">${list.boardNum}</td>
-									<td><a
-										href="/board/${list.boardType}/${list.boardNum}/boardView.do?pageNo=${pageNo}">${list.boardTitle}</a>
-									</td>
-
-								</c:when>
-
-								<c:when test="${list.boardType=='a02'}">
-
-									<td align="center">Q&A</td>
-									<td align="center">${list.boardNum}</td>
-									<td><a
-										href="/board/${list.boardType}/${list.boardNum}/boardView.do?pageNo=${pageNo}">${list.boardTitle}</a>
-									</td>
-
-								</c:when>
-
-								<c:when test="${list.boardType=='a03'}">
-
-									<td align="center">익명</td>
-									<td align="center">${list.boardNum}</td>
-									<td><a
-										href="/board/${list.boardType}/${list.boardNum}/boardView.do?pageNo=${pageNo}">${list.boardTitle}</a>
-									</td>
-
-								</c:when>
-
-								<c:otherwise>
-
-									<td align="center">익명</td>
-									<td align="center">${list.boardNum}</td>
-									<td><a
-										href="/board/${list.boardType}/${list.boardNum}/boardView.do?pageNo=${pageNo}">${list.boardTitle}</a>
-									</td>
-
-								</c:otherwise>
-
-							</c:choose>
+							<td class="leftTd">Type</td>
+							<td class="middleTd">No</td>
+							<td class="RightTd" align="center">Title</td>
 						</tr>
-					</c:forEach>
+					</thead>
+
+
+					<tbody>
+
+						<c:forEach items="${boardList}" var="list">
+							<tr>
+
+								<c:forEach items="${boardType}" var="bType">
+									<c:if test="${list.boardType eq bType.codeId}">
+
+										<td align="center">${bType.codeName }</td>
+									</c:if>
+								</c:forEach>
+								<td align="center">${list.boardNum}</td>
+								<td><a
+									href="/board/${list.boardType}/${list.boardNum}/boardView.do?pageNo=${pageNo}">${list.boardTitle}</a>
+								</td>
+
+
+							</tr>
+						</c:forEach>
+						</div>
+					</tbody>
 				</table>
 			</td>
 		</tr>
@@ -141,30 +218,37 @@
 		</tr>
 		<tr>
 			<td>
-				<form method="get">
+				<form method="get" id="boardSearch">
 					<label> <input type="checkbox" name="boardType"
 						onchange="checkboxGroup(this)"> 전체
-					</label> <label><input type="checkbox" name="boardType" value="a01"
-						onchange="checkboxGroup(this)"> 일반 </label> <label><input
-						type="checkbox" name="boardType" value="a02"
-						onchange="checkboxGroup(this)"> Q&A </label> <label><input
-						type="checkbox" name="boardType" value="a03"
-						onchange="checkboxGroup(this)"> 익명 </label> <label><input
-						type="checkbox" name="boardType" value="a04"
-						onchange="checkboxGroup(this)"> 자유 </label>
-					<button type="submit" id="boardSearch">조회</button>
+					</label>
+
+					<c:forEach items="${boardType}" var="type">
+
+						<label> <input type="checkbox" name="boardType"
+							value="${type.codeId }" onchange="checkboxGroup(this)">
+							${type.codeName }
+						</label>
+
+
+
+					</c:forEach>
+
+
+
+					<button type="submit" id="boardSearchBtn">조회</button>
 				</form>
 			</td>
 		</tr>
 		<tr>
 
 
-			<!-- ### 페이징 처리 -->
 
 
 			<td>
 
-				<div align="center">
+
+				<div align="center" id="pageLinksArea">
 					<c:forEach begin="1"
 						end="${totalCnt / 5 + (totalCnt % 5 > 0 ? 1 : 0)}" var="i">
 						<a href="/board/boardList.do?pageNo=${i}">${i}</a>
@@ -205,6 +289,82 @@
 		}
 	</script>
 
+	<script type="text/javascript">
+		$j(document)
+				.on(
+						'click',
+						'#pageLinksArea a',
+						function(event) {
+							event.preventDefault();
+
+							var pageNo = $j(this).text(); // 클릭된 페이지 번호 가져오기
+							var type = $j('input[name=boardType]:checked')
+									.val();
+
+							console.log(pageNo);
+							console.log(type);
+
+							$j
+									.ajax({
+										url : "/board/boardListSearch.do",
+										dataType : "json",
+										type : "GET",
+										data : {
+											boardType : type,
+											pageNo : pageNo
+										// 클릭된 페이지 번호 전달
+										},
+										contentType : "application/json; charset=EUC-KR",
+										success : function(data, textStatus,
+												jqXHR) {
+
+											var boardList = data.boardList;
+											var boardType = data.boardType;
+											var totalCnt = data.totalCnt;
+											var pageNo = data.pageNo;
+
+											let value = "";
+											let codeName = "";
+
+											let tableBody = $j('#boardTable tbody')
+
+											for ( let i in boardList) {
+
+												for ( let a in boardType) {
+													if (boardList[i].boardType === boardType[a].codeId) {
+														codeName = boardType[a].codeName;
+														btype = boardList[i].boardType
+														break;
+													}
+												}
+
+												value += "<tr>"
+														+ "<td align='center'>"
+														+ codeName
+														+ "</td>"
+														+ "<td>"
+														+ boardList[i].boardNum
+														+ "</td>"
+														+ "<td> <a href='/board/"
+														+ boardList[i].boardType
+														+ "/"
+														+ boardList[i].boardNum
+														+ "/boardView.do?pageNo="
+														+ pageNo
+														+ "'>"
+														+ boardList[i].boardTitle
+														+ "</a></td>" + "</tr>";
+											}
+
+											tableBody.html(value);
+										},
+										error : function(jqXHR, textStatus,
+												errorThrown) {
+											console.log("에러: " + errorThrown);
+										}
+									});
+						});
+	</script>
 
 
 </body>

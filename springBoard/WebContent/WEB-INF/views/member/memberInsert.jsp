@@ -260,7 +260,6 @@ $j(function () {
             $numCheck.show().css("color", "red").text("12글자를 초과했습니다");
         } else {
             $numCheck.hide();
-           // $userInsertBtn.prop("disabled", false); // 활성화
         }
     });
 });

@@ -70,6 +70,10 @@
         commit;
         
         
+        
+        
+        
+        
         SELECT TO_NUMBER(MAX(NVL (BOARD_NUM,1))+1)
 		FROM BOARD
 		WHERE BOARD_TYPE = '1'
@@ -319,6 +323,51 @@
         ;
         
         
-        select creator
+        -- 왜 a01만 검색이 안될까?
+        SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,TOTAL_CNT
+		,CREATOR
+		FROM
+		(
+		SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,ROW_NUMBER()
+		OVER(ORDER BY
+		BOARD_NUM DESC) AS NUMROW
+		,COUNT(*) OVER() AS
+		TOTAL_CNT
+		,CREATOR
+		FROM
+		BOARD
+        where BOARD_TYPE in ('a01')
+		)
+		WHERE
+		NUMROW BETWEEN (2-1)* 5 + 1
+		AND
+		(2)*5
+		
+			
+            ;
+        
+        select *
         from board
+        where board_type = 'a01'
+        ;
+        
+        SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,CREATOR
+		FROM
+         board
+        where board_type = 'a03'
         ;

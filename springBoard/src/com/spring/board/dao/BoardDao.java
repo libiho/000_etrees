@@ -30,9 +30,7 @@ public interface BoardDao {
 
 	public List<CodeVo> selectBoardType() throws Exception;
 
-
 	public List<BoardVo> selectBoardList(TypeVo typeVo) throws Exception;
-
 
 	public int selectBoardCnt(TypeVo typeVo) throws Exception;
 

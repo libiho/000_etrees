@@ -22,7 +22,6 @@ public class BoardDaoImpl implements BoardDao{
 	
 	@Override
 	public String selectTest() throws Exception {
-		// TODO Auto-generated method stub
 		
 		String a = sqlSession.selectOne("board.boardList");
 		
@@ -32,13 +31,11 @@ public class BoardDaoImpl implements BoardDao{
 	
 	@Override
 	public BoardVo selectBoard(BoardVo boardVo) throws Exception {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("board.boardView", boardVo);
 	}
 	
 	@Override
 	public int boardInsert(BoardVo boardVo) throws Exception {
-		// TODO Auto-generated method stub
 		return sqlSession.insert("board.boardInsert", boardVo);
 	}
 	
@@ -54,19 +51,16 @@ public class BoardDaoImpl implements BoardDao{
 	}
 	@Override
 	public List<BoardVo> selectBoardListSearch(TypeVo typeVo) throws Exception {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("board.boardSearch",typeVo);
 	}
 	@Override
 	public int selectBoardCntSearch(TypeVo typeVo) throws Exception {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("board.boardSearchTotal",typeVo);
 	}
 
 
 	@Override
 	public List<CodeVo> selectBoardType() throws Exception {
-	
 		return sqlSession.selectList("board.boardType");
 	}
 
