@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/common/common.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -58,18 +58,18 @@
 	             
 	                
 	                if (data.success === 'Y') {
-	                    alert("·Î±×ÀÎ ¼º°ø");
+	                    alert("ë¡œê·¸ì¸ ì„±ê³µ");
 	                    location.href = "/board/boardList.do";
 	                } else {
-	                    alert("·Î±×ÀÎ ½ÇÆĞ ´Ù½Ã ÀÔ·ÂÇØÁÖ½Ê½Ã¿À");
+	                    alert("ë¡œê·¸ì¸ ì‹¤íŒ¨ ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì‹­ì‹œì˜¤");
 	                }
 	                
 	            },
 	            error: function(jqXHR, textStatus, errorThrown) {
-	                alert("·Î±×ÀÎ ½ÇÆĞ");
+	                alert("ë¡œê·¸ì¸ ì‹¤íŒ¨");
 	            },
 	            complete: function() {
-	                // AJAX ¿äÃ»ÀÌ ¿Ï·áµÇ¸é ¹öÆ° ´Ù½Ã È°¼ºÈ­
+	                // AJAX ìš”ì²­ì´ ì™„ë£Œë˜ë©´ ë²„íŠ¼ ë‹¤ì‹œ í™œì„±í™”
 	                $j("#submitBtn").prop('disabled', false);
 	            }
 	        });

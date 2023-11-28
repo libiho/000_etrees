@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/common/common.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
 <style type="text/css">
@@ -12,6 +12,10 @@
 	text-align: center;
 }
 </style>
+
+<script
+	src="${pageContextpageContext.request.contextPath}/resources/js/member.js"></script>
+
 
 <script type="text/javascript">
 
@@ -27,11 +31,9 @@ $j(document).ready(function(){
 
 		var $frm = $j('.memberInsertForm :input');
 
-		console.log($frm);
 
 		var param = $frm.serialize();
 		
-		console.log(param);
 		
 		$j.ajax({
 		    url : "/member/memberInsertAction.do",
@@ -40,18 +42,17 @@ $j(document).ready(function(){
 		    data : param,
 		    success: function(data, textStatus, jqXHR)
 		    {
-				alert("È¸¿ø°¡ÀÔ ¼º°ø");
+				alert("íšŒì›ê°€ì… ì„±ê³µ");
 				
-				alert("¸Ş¼¼Áö:"+data.success);
+				alert("ë©”ì„¸ì§€:"+data.success);
 				
-				/* ### ¸®½ºÆ®·Î ¾È°¡´Â°Å ÇØ°á */
-				setTimeout(function(){
-	                location.href = "/board/boardList.do";
-	            }, 3000);
+				/* ### ë¦¬ìŠ¤íŠ¸ë¡œ ì•ˆê°€ëŠ”ê±° í•´ê²° */
+				 window.location.href = "/board/boardList.do";
+	           
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
-		    	alert("È¸¿ø°¡ÀÔ ½ÇÆĞ");
+		    	alert("íšŒì›ê°€ì… ì‹¤íŒ¨");
 		    }
 		});
 	});
@@ -90,7 +91,7 @@ $j(document).ready(function(){
 						<td width="150px" class="tCenter">id</td>
 						<td width="300px"><input type="text" id="userId"
 							name="userId" required> <input type="button" id="checkId"
-							value="Áßº¹È®ÀÎ">
+							value="ì¤‘ë³µí™•ì¸">
 
 							<div id="checkResult" style="font-size: 0.8em; display: none"></td>
 
@@ -114,7 +115,7 @@ $j(document).ready(function(){
 						<tr>
 							<td class="tCenter" required>phone</td>
 
-<!-- ### 4±ÛÀÚ ÀÌÇÏ´Â ÀÔ·Â¾ÈµÇ°Ô ¼³Á¤ -->
+<!-- ### 4ê¸€ì ì´í•˜ëŠ” ì…ë ¥ì•ˆë˜ê²Œ ì„¤ì • -->
 							<td><select name="userPhone1" id="firstPhone">
 									<c:forEach items="${uniquePhoneList}" var="phone">
 										<option value="${phone.codeName}" >${phone.codeName}</option>
@@ -126,7 +127,7 @@ $j(document).ready(function(){
 						<tr>
 							<td class="tCenter">postNo</td>
 							<td><input type="text" id="postNo" name="postNo"
-								placeholder="¼ıÀÚ·Î¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä"></td>
+								placeholder="ìˆ«ìë¡œë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”"></td>
 						</tr>
 						<tr>
 							<td class="tCenter">address</td>
@@ -140,7 +141,7 @@ $j(document).ready(function(){
 					</table>
 				</td>
 			<tr>
-				<td align="right" colspan="2"><button type="submit"
+				<td align="right" colspan="2"><button type="button"
 						id="userInsertBtn">join</button></td>
 
 			</tr>
@@ -150,121 +151,6 @@ $j(document).ready(function(){
 
 
 
-	<script type="text/javascript">
-
-//ÁÖ¼Ò ¼ıÀÚ ÁöÁ¤
-$j(function () {
-	$j("#postNo").on("input", function () {
-		let formattedPostNo = this.value.replace(/\D/g, ""); // ÀÔ·ÂµÈ °ª Áß ¼ıÀÚ°¡ ¾Æ´Ñ ¹®ÀÚ Á¦°Å
-		if (formattedPostNo.length > 5) {
-			formattedPostNo = formattedPostNo.slice(0, 3) + "-" + formattedPostNo.slice(3, 6); // xxx-xxx Çü½ÄÀ¸·Î º¯°æ
-		}
-		this.value = formattedPostNo;
-	});
-});
-
-
-//ÇÚµåÆù Áß°£¹øÈ£ ÁöÁ¤
-$j(function () {
-	$j('.onlyNum4').on('input', function (event) {
-		let value = $j(this).val();
-		value = value.replace(/\D/g, ''); // ÀÔ·ÂµÈ °ª Áß ¼ıÀÚ°¡ ¾Æ´Ñ ¹®ÀÚ Á¦°Å
-		value = value.substring(0, 4); // Ã³À½ºÎÅÍ 4ÀÚ¸®±îÁöÀÇ °ª À¯Áö
-		$j(this).val(value); // °á°ú¸¦ ´Ù½Ã ÀÔ·Â¶õ¿¡ Àû¿ë
-	});
-
-	$j('.onlyNum4').on('keypress', function (event) {
-		if ($j(this).val().length >= 4) {
-			event.preventDefault(); // 4ÀÚ¸® ÀÌÈÄÀÇ ÀÔ·ÂÀ» ¹æÁö
-		}
-	});
-});
-
-
-
-//ºñ¹Ğ¹øÈ£ Ã¼Å©
-$j(function () {
-	const $userPwd = $j('#userPwd');
-	const $checkPwd = $j('#checkPwd');
-	const $pwdCheckResult = $j('#pwdCheckResult');
-
-	$checkPwd.keyup(function () {
-		if ($userPwd.val() === $checkPwd.val()) {
-			$pwdCheckResult.show();
-			$pwdCheckResult.css("color", "green").text("ºñ¹Ğ¹øÈ£°¡ °°½À´Ï´Ù");
-		} else {
-			$pwdCheckResult.show();
-			$pwdCheckResult.css("color", "red").text("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù");
-		}
-	});
-});
-
-
-
-//¾ÆÀÌµğ Áßº¹ È®ÀÎ
-$j(function () {
-
-	$j("#checkId").click(
-		function () {
-
-			let userId = $j("#userId").val();
-
-			$j("#checkId").prop("disabled", true);
-
-			$j.ajax({
-				type: 'POST',
-				url: "/member/memberCheckId.do",
-				data: {
-					"userId": userId
-				},
-				success: function (data) {
-					if (data === "Y") {
-						console.log("¼º°ø");
-						$j('#checkResult').show();
-						$j("#checkResult").css("color", "green")
-							.text("»ç¿ë °¡´ÉÇÑ IDÀÔ´Ï´Ù");
-						$j("#userPwd").trigger("focus");
-						$j("#checkId").prop("disabled", false);
-					} else {
-						console.log("½ÇÆĞ");
-						$j('#checkResult').show();
-						$j("#checkResult").css("color", "red")
-							.text("Áßº¹µÈ ID ÀÔ´Ï´Ù");
-						$j("#userId").val("").trigger("focus");
-
-					}
-				},
-				error: function (error) {
-					alert(error);
-				},
-				complete: function () {
-					// ¿äÃ» ¿Ï·á ÈÄ ¹öÆ° ´Ù½Ã È°¼ºÈ­
-					$j("#checkId").prop("disabled", false);
-				}
-			});
-		});
-});
-
-
-//ºñ¹Ğ¹øÈ£ ±ÛÀÚ¼ö
-$j(function () {
-    const $numCheck = $j('#numCheck');
-    const $userInsertBtn = $j('#userInsertBtn');
-
-    $j('#userPwd').on('input', function () {
-        const password = $j(this).val();
-
-        if (password.length < 6) {
-            $numCheck.show().css("color", "red").text("6±ÛÀÚ ÀÌ»ó ÀÔ·ÂÇØÁÖ¼¼¿ä");
-        } else if (password.length > 12) {
-            $numCheck.show().css("color", "red").text("12±ÛÀÚ¸¦ ÃÊ°úÇß½À´Ï´Ù");
-        } else {
-            $numCheck.hide();
-        }
-    });
-});
-
-</script>
 
 
 

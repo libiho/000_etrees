@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
     <%@include file="/WEB-INF/views/common/common.jsp"%>  
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 
@@ -25,15 +25,15 @@
 			    data : param,
 			    success: function(data, textStatus, jqXHR)
 			    {
-					alert("¼öÁ¤¿Ï·á");
+					alert("ìˆ˜ì •ì™„ë£Œ");
 					
-					alert("¸Þ¼¼Áö:"+data.success);
+					alert("ë©”ì„¸ì§€:"+data.success);
 					
 					location.href = "/board/boardList.do";
 			    },
 			    error: function (jqXHR, textStatus, errorThrown)
 			    {
-			    	alert("½ÇÆÐ");
+			    	alert("ì‹¤íŒ¨");
 			    }
 			});
 		});
@@ -94,7 +94,7 @@
 			<tr>
 		<td align="right">
 			<a href="/board/boardList.do">List</a>
-		 <input id="submit" type="button" value="µî·Ï "></td>
+		 <input id="submit" type="button" value="ë“±ë¡ "></td>
 	</tr>
 		
 		

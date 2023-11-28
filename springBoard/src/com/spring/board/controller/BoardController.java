@@ -42,32 +42,6 @@ public class BoardController {
 	 * @author : mini
 	 * @date : 2023. 11. 27.
 	 */
-//	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
-//	public String boardList(Locale locale, Model model, TypeVo typeVo) throws Exception {
-//
-//		List<BoardVo> boardList = new ArrayList<BoardVo>();
-//		List<CodeVo> boardType = new ArrayList<CodeVo>();
-//
-//		int pageNo = 1;
-//		int totalCnt = 0;
-//
-//		if (typeVo.getPageNo() == 0) {
-//			typeVo.setPageNo(pageNo);
-//		}
-//
-//		boardList = boardService.selectBoardList(typeVo);
-//		totalCnt = boardService.selectBoardCnt(typeVo);
-//
-//		boardType = boardService.selectBoardType();
-//
-//		model.addAttribute("boardType", boardType);
-//		model.addAttribute("boardList", boardList);
-//		model.addAttribute("totalCnt", totalCnt);
-//		model.addAttribute("pageNo", pageNo);
-//
-//		return "board/boardList";
-//	}
-
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
 	public String boardList(Locale locale, Model model, TypeVo typeVo,
 			@RequestParam(value = "cpage", defaultValue = "1") int currentPage) throws Exception {
@@ -85,7 +59,7 @@ public class BoardController {
 		boardList = boardService.selectBoardList(typeVo);
 		totalCnt = boardService.selectBoardCnt(typeVo);
 
-		PageInfo pi = Pagination.getPageInfo(totalCnt, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(totalCnt, currentPage, 5, 5);
 
 		boardType = boardService.selectBoardType();
 
@@ -104,6 +78,7 @@ public class BoardController {
 	 * @author : mini
 	 * @date : 2023. 11. 27.
 	 */
+
 	@RequestMapping(value = "/board/boardListSearch.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> boardListSearch(Locale locale, Model model, TypeVo typeVo,
@@ -117,21 +92,19 @@ public class BoardController {
 
 		if (typeVo.getPageNo() == 0) {
 			typeVo.setPageNo(page);
-		}else {
-			typeVo.setPageNo(typeVo.getPageNo());
 		}
 
-		// Java 코드에서 type이 null 또는 빈 문자열인 경우에 따라 처리
-		if (typeVo.getBoardType().equals("on")) {
+		if (typeVo.getBoardType() != null && typeVo.getBoardType().equals("on")) {
 			typeVo.setBoardType(null);
 		}
+		currentPage = typeVo.getPageNo();
 
 		boardList = boardService.selectBoardListSearch(typeVo);
 
 		totalCnt = boardService.selectBoardCntSearch(typeVo);
 		boardType = boardService.selectBoardType();
 
-		PageInfo pi = Pagination.getPageInfo(totalCnt, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(totalCnt, currentPage, 5, 5);
 
 		Map<String, Object> response = new HashMap<>();
 		response.put("boardList", boardList);
@@ -139,10 +112,7 @@ public class BoardController {
 		response.put("boardType", boardType);
 		response.put("pageNo", page);
 		response.put("pi", pi);
-		
 
-
-		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}

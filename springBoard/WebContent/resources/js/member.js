@@ -1,5 +1,5 @@
 
-// 주소 숫자 지정
+//주소 숫자 지정
 $j(function () {
 	$j("#postNo").on("input", function () {
 		let formattedPostNo = this.value.replace(/\D/g, ""); // 입력된 값 중 숫자가 아닌 문자 제거
@@ -11,7 +11,7 @@ $j(function () {
 });
 
 
-// 핸드폰 중간번호 지정
+//핸드폰 중간번호 지정
 $j(function () {
 	$j('.onlyNum4').on('input', function (event) {
 		let value = $j(this).val();
@@ -29,7 +29,7 @@ $j(function () {
 
 
 
-// 비밀번호 체크
+//비밀번호 체크
 $j(function () {
 	const $userPwd = $j('#userPwd');
 	const $checkPwd = $j('#checkPwd');
@@ -48,11 +48,9 @@ $j(function () {
 
 
 
-// 아이디 중복 확인
+//아이디 중복 확인
 $j(function () {
 
-	$j("#userInsertBtn")
-		.prop("disabled", true);
 	$j("#checkId").click(
 		function () {
 
@@ -73,10 +71,7 @@ $j(function () {
 						$j("#checkResult").css("color", "green")
 							.text("사용 가능한 ID입니다");
 						$j("#userPwd").trigger("focus");
-						// 사용 가능한 경우 회원가입 버튼 활성화
-						$j("#userInsertBtn")
-							.prop("disabled", false);
-						// $j("#userId").prop("readonly", true);
+						$j("#checkId").prop("disabled", false);
 					} else {
 						console.log("실패");
 						$j('#checkResult').show();
@@ -95,6 +90,25 @@ $j(function () {
 				}
 			});
 		});
+});
+
+
+//비밀번호 글자수
+$j(function () {
+    const $numCheck = $j('#numCheck');
+    const $userInsertBtn = $j('#userInsertBtn');
+
+    $j('#userPwd').on('input', function () {
+        const password = $j(this).val();
+
+        if (password.length < 6) {
+            $numCheck.show().css("color", "red").text("6글자 이상 입력해주세요");
+        } else if (password.length > 12) {
+            $numCheck.show().css("color", "red").text("12글자를 초과했습니다");
+        } else {
+            $numCheck.hide();
+        }
+    });
 });
 
 

@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/common/common.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>list</title>
 
 <style>
@@ -25,132 +25,9 @@
 
 
 </head>
-<script type="text/javascript">
-	$j(document)
-			.ready(
-					function() {
+<script
+	src="${pageContextpageContext.request.contextPath}/resources/js/board.js"></script>
 
-						$j("#boardSearchBtn")
-								.on(
-										"click",
-										function(event) {
-
-											event.preventDefault(); // ∆˚ ¿¸º€ ±‚∫ª µø¿€ ∏∑±‚ -> æ»«œ∏È µŒπ¯ controller ≈Ω 
-
-											var type = $j(
-													'input[name=boardType]:checked')
-													.val();
-
-											var urlAjax = "/board/boardListSearch.do";
-
-											$j("#boardSearch").prop("disabled",
-													true);
-
-										
-
-											$j
-													.ajax({
-														url : urlAjax,
-														dataType : "json",
-														type : "GET",
-														data : {
-															boardType : type
-														},
-														contentType : "application/json; charset=EUC-KR",
-														success : function(
-																data,
-																textStatus,
-																jqXHR) {
-
-															var boardList = data.boardList;
-															var boardType = data.boardType;
-															var totalCnt = data.totalCnt;
-															var pageNo = data.pageNo;
-
-															let value = "";
-															let codeName = "";
-
-															let tableBody = $j('#boardTable tbody')
-
-															for ( let i in boardList) {
-
-																for ( let a in boardType) {
-																	if (boardList[i].boardType === boardType[a].codeId) {
-																		codeName = boardType[a].codeName;
-																		btype = boardList[i].boardType
-																		break;
-																	}
-																}
-
-																value += "<tr>"
-																		+ "<td align='center'>"
-																		+ codeName
-																		+ "</td>"
-																		+ "<td>"
-																		+ boardList[i].boardNum
-																		+ "</td>"
-																		+ "<td> <a href='/board/"
-																		+ boardList[i].boardType
-																		+ "/"
-																		+ boardList[i].boardNum
-																		+ "/boardView.do?pageNo="
-																		+ pageNo
-																		+ "'>"
-																		+ boardList[i].boardTitle
-																		+ "</a></td>"
-																		+ "</tr>";
-															}
-
-															tableBody
-																	.html(value);
-
-															// º≥¡§«— ∞™ø° µ˚∂Û º˝¿⁄ √‚∑¬ 
-															$j(
-																	"#totalCountArea")
-																	.html(
-																			"<td align='right'>total : "
-																					+ totalCnt
-																					+ "</td>");
-
-															updatePage(
-																	totalCnt,
-																	pageNo);
-
-														},
-														error : function(jqXHR,
-																textStatus,
-																errorThrown) {
-															console
-																	.log("ø÷ ø°∑Ø∞° ≥™¥¬¡ˆ¥¬ ∏∏£∞⁄¥¬µ• ≥≥¥œ¥Ÿø‰");
-														},
-														complete : function() {
-															// ø‰√ª øœ∑· »ƒ πˆ∆∞ ¥ŸΩ√ »∞º∫»≠
-															$j("#boardSearch")
-																	.prop(
-																			"disabled",
-																			false);
-														}
-													});
-										});
-
-					});
-
-	function updatePage(totalCnt, pageNo) {
-
-		var pageLinks = "";
-
-		var num = totalCnt / 5 + (totalCnt % 5 > 0 ? 1 : 0);
-
-		for (var i = 1; i <= num; i++) {
-
-			pageLinks += "<a href='/board/boardListSearch.do?pageNo=" + pageNo
-					+ "'>" + [ i ] + "</a> ";
-		}
-
-		$j("#pageLinksArea")
-				.html("<div align='center'>" + pageLinks + "</div>");
-	}
-</script>
 <body>
 	<table align="center">
 
@@ -185,12 +62,10 @@
 						</tr>
 					</thead>
 
-
 					<tbody>
 
 						<c:forEach items="${boardList}" var="list">
 							<tr>
-
 								<c:forEach items="${boardType}" var="bType">
 									<c:if test="${list.boardType eq bType.codeId}">
 
@@ -202,7 +77,6 @@
 									href="/board/${list.boardType}/${list.boardNum}/boardView.do?pageNo=${pageNo}">${list.boardTitle}</a>
 								</td>
 
-
 							</tr>
 						</c:forEach>
 						</div>
@@ -211,16 +85,16 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="right" colspan="2"><a href="/board/boardWrite.do">±€æ≤±‚</a>
+			<td align="right" colspan="2"><a href="/board/boardWrite.do">Í∏ÄÏì∞Í∏∞</a>
 				<c:if test="${not empty loginUser }">
-					<a href="/member/memberLogout.do">∑Œ±◊æ∆øÙ</a>
+					<a href="/member/memberLogout.do">Î°úÍ∑∏ÏïÑÏõÉ</a>
 				</c:if></td>
 		</tr>
 		<tr>
-			<td>
+			<td><input type="hidden" name="nowPage" value="${pageNo}">
 				<form method="get" id="boardSearch">
 					<label> <input type="checkbox" name="boardType"
-						onchange="checkboxGroup(this)"> ¿¸√º
+						onchange="checkboxGroup(this)"> Ï†ÑÏ≤¥
 					</label>
 
 					<c:forEach items="${boardType}" var="type">
@@ -230,141 +104,58 @@
 							${type.codeName }
 						</label>
 
-
-
 					</c:forEach>
 
 
-
-					<button type="submit" id="boardSearchBtn">¡∂»∏</button>
-				</form>
-			</td>
+					<button type="submit" id="boardSearchBtn">Ï°∞Ìöå</button>
+				</form></td>
 		</tr>
 		<tr>
 
 
-
-
 			<td>
 
-
 				<div align="center" id="pageLinksArea">
-					<c:forEach begin="1"
-						end="${totalCnt / 5 + (totalCnt % 5 > 0 ? 1 : 0)}" var="i">
-						<a href="/board/boardList.do?pageNo=${i}">${i}</a>
-					</c:forEach>
+
+					<div align="center" id="basicPageLink">
+						<br>
+						<c:choose>
+
+							<c:when test="${pi.currentPage eq 1 }">
+								<a class="page-link" href="">Ïù¥Ï†Ñ</a>
+							</c:when>
+
+							<c:otherwise>
+								<a class="page-link"
+									href="/board/boardList.do?pageNo=${pi.currentPage - 1 }">Ïù¥Ï†Ñ</a>
+							</c:otherwise>
+
+						</c:choose>
+
+
+						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+							<a class="page-link" href="/board/boardList.do?pageNo=${ p }">${ p }</a>
+						</c:forEach>
+						<c:choose>
+							<c:when test="${pi.currentPage eq pi.maxPage }">
+								<a class="page-link" href="">Îã§Ïùå</a>
+							</c:when>
+							<c:otherwise>
+								<a class="page-link"
+									href="/board/boardList.do?pageNo=${pi.currentPage + 1 }">Îã§Ïùå</a>
+							</c:otherwise>
+
+						</c:choose>
+					</div>
 				</div>
 
-
-
 			</td>
-
-
-
-
 
 		</tr>
 
 	</table>
 
 
-
-	<script type="text/javascript">
-		function checkboxGroup(currentCheckbox) {
-			const checkboxes = document.getElementsByName("boardType");
-			let checkedCount = 0;
-
-			for (let i = 0; i < checkboxes.length; i++) {
-				if (checkboxes[i].checked) {
-					checkedCount++;
-					if (checkboxes[i] !== currentCheckbox) {
-						checkboxes[i].checked = false;
-					}
-				}
-			}
-
-			if (checkedCount === 0) {
-				currentCheckbox.checked = true;
-			}
-		}
-	</script>
-
-	<script type="text/javascript">
-		$j(document)
-				.on(
-						'click',
-						'#pageLinksArea a',
-						function(event) {
-							event.preventDefault();
-
-							var pageNo = $j(this).text(); // ≈¨∏Øµ» ∆‰¿Ã¡ˆ π¯»£ ∞°¡Æø¿±‚
-							var type = $j('input[name=boardType]:checked')
-									.val();
-
-							console.log(pageNo);
-							console.log(type);
-
-							$j
-									.ajax({
-										url : "/board/boardListSearch.do",
-										dataType : "json",
-										type : "GET",
-										data : {
-											boardType : type,
-											pageNo : pageNo
-										// ≈¨∏Øµ» ∆‰¿Ã¡ˆ π¯»£ ¿¸¥ﬁ
-										},
-										contentType : "application/json; charset=EUC-KR",
-										success : function(data, textStatus,
-												jqXHR) {
-
-											var boardList = data.boardList;
-											var boardType = data.boardType;
-											var totalCnt = data.totalCnt;
-											var pageNo = data.pageNo;
-
-											let value = "";
-											let codeName = "";
-
-											let tableBody = $j('#boardTable tbody')
-
-											for ( let i in boardList) {
-
-												for ( let a in boardType) {
-													if (boardList[i].boardType === boardType[a].codeId) {
-														codeName = boardType[a].codeName;
-														btype = boardList[i].boardType
-														break;
-													}
-												}
-
-												value += "<tr>"
-														+ "<td align='center'>"
-														+ codeName
-														+ "</td>"
-														+ "<td>"
-														+ boardList[i].boardNum
-														+ "</td>"
-														+ "<td> <a href='/board/"
-														+ boardList[i].boardType
-														+ "/"
-														+ boardList[i].boardNum
-														+ "/boardView.do?pageNo="
-														+ pageNo
-														+ "'>"
-														+ boardList[i].boardTitle
-														+ "</a></td>" + "</tr>";
-											}
-
-											tableBody.html(value);
-										},
-										error : function(jqXHR, textStatus,
-												errorThrown) {
-											console.log("ø°∑Ø: " + errorThrown);
-										}
-									});
-						});
-	</script>
 
 
 </body>
