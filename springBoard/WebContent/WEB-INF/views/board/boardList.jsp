@@ -91,7 +91,8 @@
 				</c:if></td>
 		</tr>
 		<tr>
-			<td><input type="hidden" name="nowPage" value="${pageNo}">
+				<input type="hidden" name="nowPage" value="${pageNo}">
+			<td>
 				<form method="get" id="boardSearch">
 					<label> <input type="checkbox" name="boardType"
 						onchange="checkboxGroup(this)"> 전체
@@ -108,7 +109,8 @@
 
 
 					<button type="submit" id="boardSearchBtn">조회</button>
-				</form></td>
+				</form>
+			</td>
 		</tr>
 		<tr>
 
@@ -117,36 +119,34 @@
 
 				<div align="center" id="pageLinksArea">
 
-					<div align="center" id="basicPageLink">
-						<br>
-						<c:choose>
+					<br>
+					<c:choose>
 
-							<c:when test="${pi.currentPage eq 1 }">
-								<a class="page-link" href="">이전</a>
-							</c:when>
+						<c:when test="${pi.currentPage eq 1 }">
+							<a class="page-link" href="">이전</a>
+						</c:when>
 
-							<c:otherwise>
-								<a class="page-link"
-									href="/board/boardList.do?pageNo=${pi.currentPage - 1 }">이전</a>
-							</c:otherwise>
+						<c:otherwise>
+							<a class="page-link"
+								href="/board/boardList.do?pageNo=${pi.currentPage - 1 }">이전</a>
+						</c:otherwise>
 
-						</c:choose>
+					</c:choose>
 
 
-						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-							<a class="page-link" href="/board/boardList.do?pageNo=${ p }">${ p }</a>
-						</c:forEach>
-						<c:choose>
-							<c:when test="${pi.currentPage eq pi.maxPage }">
-								<a class="page-link" href="">다음</a>
-							</c:when>
-							<c:otherwise>
-								<a class="page-link"
-									href="/board/boardList.do?pageNo=${pi.currentPage + 1 }">다음</a>
-							</c:otherwise>
+					<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+						<a class="page-link" href="/board/boardList.do?pageNo=${ p }">${ p }</a>
+					</c:forEach>
+					<c:choose>
+						<c:when test="${pi.currentPage eq pi.maxPage }">
+							<a class="page-link" href="">다음</a>
+						</c:when>
+						<c:otherwise>
+							<a class="page-link"
+								href="/board/boardList.do?pageNo=${pi.currentPage + 1 }">다음</a>
+						</c:otherwise>
 
-						</c:choose>
-					</div>
+					</c:choose>
 				</div>
 
 			</td>
@@ -156,7 +156,119 @@
 	</table>
 
 
+	<script type="text/javascript">
 
+/* 페이징처리 링크 클릭했을때 */
+$j(document)
+		.on(
+				'click',
+				'#pageLinksArea a',
+				function(event) {
+					event.preventDefault();
+					
+					
+					
+
+					var pageNo = $j(this).text(); // 클릭된 페이지 번호 가져오기
+					
+					if(pageNo != '다음'){
+					 $j('input[name="nowPage"]').val(pageNo);
+					}
+					
+					var nowPage = parseInt($j('input[name="nowPage"]').val(), 10);
+					
+					console.log(nowPage);
+					
+					if (pageNo === '다음') {
+						
+						
+					     if (nowPage % 5 == 0) {
+						    // 5의 배수인 페이지에서 '다음' 클릭 시 처리 (5, 10, 15...)
+						    pageNo = nowPage +1;
+						}else if(nowPage <= 5){
+							  pageNo = 6;
+						}else{
+							pageNo = (nowPage/5)*5 + 1;
+						} 
+					   
+					}
+					
+					
+					
+					
+					console.log(pageNo);
+					
+					var type = $j('input[name=boardType]:checked')
+							.val();
+					
+					$j
+							.ajax({
+								url : "/board/boardListSearch.do",
+								dataType : "json",
+								type : "GET",
+								data : {
+									boardType : type,
+									pageNo : pageNo
+								// 클릭된 페이지 번호 전달
+								},
+								contentType : "application/json; charset=UTF-8",
+								success : function(data, textStatus,
+										jqXHR) {
+
+									var boardList = data.boardList;
+									var boardType = data.boardType;
+									var totalCnt = data.totalCnt;
+									var pageNo = data.pageNo;
+
+									let value = "";
+									let codeName = "";
+
+									let tableBody = $j('#boardTable tbody')
+
+									for ( let i in boardList) {
+
+										for ( let a in boardType) {
+											if (boardList[i].boardType === boardType[a].codeId) {
+												codeName = boardType[a].codeName;
+												btype = boardList[i].boardType
+												break;
+											}
+										}
+
+										value += "<tr>"
+												+ "<td align='center'>"
+												+ codeName
+												+ "</td>"
+												+ "<td>"
+												+ boardList[i].boardNum
+												+ "</td>"
+												+ "<td> <a href='/board/"
+												+ boardList[i].boardType
+												+ "/"
+												+ boardList[i].boardNum
+												+ "/boardView.do?pageNo="
+												+ pageNo
+												+ "'>"
+												+ boardList[i].boardTitle
+												+ "</a></td>" + "</tr>";
+									}
+
+									tableBody.html(value);
+									
+									
+									updatePage(
+											totalCnt,
+											pageNo);
+									
+								},
+								error : function(jqXHR, textStatus,
+										errorThrown) {
+									console.log("에러: " + errorThrown);
+								}
+							});
+				});
+
+</script>
 
 </body>
 </html>
