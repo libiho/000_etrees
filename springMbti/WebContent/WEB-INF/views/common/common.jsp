@@ -11,6 +11,10 @@
 <title></title>
 </head>
 <script src="/resources/js/jquery-1.10.2.js"></script>
+<!-- 부트스트랩에서 제공하고 있는 스타일 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	var $j = jQuery.noConflict(); // jQuery/$ 는 이제 $j로 변경됨.
 	const contextPath = "${contextPath}";
