@@ -115,14 +115,14 @@ $j(document).ready(function(){
 						<tr>
 							<td class="tCenter" required>phone</td>
 
-<!-- ### 4글자 이하는 입력안되게 설정 -->
 							<td><select name="userPhone1" id="firstPhone">
 									<c:forEach items="${uniquePhoneList}" var="phone">
 										<option value="${phone.codeName}" >${phone.codeName}</option>
 									</c:forEach>
-							</select> -<input id="userPhone2" name="userPhone2" class="onlyNum4"
+							</select> -<input id="userPhone2" name="userPhone2" class="onlyNum4 middleNum"
 								style="width: 50px" required>-<input id="userPhone3"
-								class="onlyNum4" name="userPhone3" style="width: 50px" required></td>
+								class="onlyNum4 lastNum" name="userPhone3" style="width: 50px" required>
+								<div id="onlyNumFourth" style="font-size: 0.8em; display: none"></td></td>
 						</tr>
 						<tr>
 							<td class="tCenter">postNo</td>

@@ -92,8 +92,9 @@
 		FROM
 		BOARD
 		<if test="boardType != null">
-			WHERE BOARD_TYPE =
+			WHERE BOARD_TYPE IN (
 			#{boardType}
+			)
 		</if>
 		)
 		WHERE
@@ -116,15 +117,16 @@
 
 
 
-	<select id="boardSearchTotal" parameterType="Integer"
+	<select id="boardSearchTotal" parameterType="com.spring.board.vo.TypeVo"
 		resultType="Integer">
 		SELECT
 		COUNT(*) AS TOTAL_CNT
 		FROM
 		BOARD
 		<if test="boardType != null">
-			WHERE BOARD_TYPE =
+			WHERE BOARD_TYPE IN (
 			#{boardType}
+			)
 		</if>
 	</select>
 

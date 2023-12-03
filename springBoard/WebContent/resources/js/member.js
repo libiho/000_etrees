@@ -1,7 +1,7 @@
 
 //주소 숫자 지정
-$j(function () {
-	$j("#postNo").on("input", function () {
+$j(function() {
+	$j("#postNo").on("input", function() {
 		let formattedPostNo = this.value.replace(/\D/g, ""); // 입력된 값 중 숫자가 아닌 문자 제거
 		if (formattedPostNo.length > 5) {
 			formattedPostNo = formattedPostNo.slice(0, 3) + "-" + formattedPostNo.slice(3, 6); // xxx-xxx 형식으로 변경
@@ -12,30 +12,45 @@ $j(function () {
 
 
 //핸드폰 중간번호 지정
-$j(function () {
-	$j('.onlyNum4').on('input', function (event) {
+$j(function() {
+
+	var $phoneNum = $j('#onlyNumFourth');
+
+	$j('.onlyNum4').on('input', function(event) {
 		let value = $j(this).val();
 		value = value.replace(/\D/g, ''); // 입력된 값 중 숫자가 아닌 문자 제거
 		value = value.substring(0, 4); // 처음부터 4자리까지의 값 유지
 		$j(this).val(value); // 결과를 다시 입력란에 적용
+
+		// 모든 입력 필드가 4글자인 경우 버튼 활성화
+		if ($j('.onlyNum4').toArray().every(field => $j(field).val().length === 4)) {
+			$j("#userInsertBtn").prop("disabled", false);
+			$phoneNum.hide();
+		} else {
+			$j("#userInsertBtn").prop("disabled", true);
+			$phoneNum.show();
+			$phoneNum.css("color", "red").text("각 번호 4글자 작성해주십시오");
+		}
 	});
 
-	$j('.onlyNum4').on('keypress', function (event) {
+	$j('.onlyNum4').on('keypress', function(event) {
 		if ($j(this).val().length >= 4) {
 			event.preventDefault(); // 4자리 이후의 입력을 방지
 		}
 	});
+
+
 });
 
 
 
 //비밀번호 체크
-$j(function () {
+$j(function() {
 	const $userPwd = $j('#userPwd');
 	const $checkPwd = $j('#checkPwd');
 	const $pwdCheckResult = $j('#pwdCheckResult');
 
-	$checkPwd.keyup(function () {
+	$checkPwd.keyup(function() {
 		if ($userPwd.val() === $checkPwd.val()) {
 			$pwdCheckResult.show();
 			$pwdCheckResult.css("color", "green").text("비밀번호가 같습니다");
@@ -49,10 +64,10 @@ $j(function () {
 
 
 //아이디 중복 확인
-$j(function () {
+$j(function() {
 
 	$j("#checkId").click(
-		function () {
+		function() {
 
 			let userId = $j("#userId").val();
 
@@ -64,7 +79,7 @@ $j(function () {
 				data: {
 					"userId": userId
 				},
-				success: function (data) {
+				success: function(data) {
 					if (data === "Y") {
 						console.log("성공");
 						$j('#checkResult').show();
@@ -81,10 +96,10 @@ $j(function () {
 
 					}
 				},
-				error: function (error) {
+				error: function(error) {
 					alert(error);
 				},
-				complete: function () {
+				complete: function() {
 					// 요청 완료 후 버튼 다시 활성화
 					$j("#checkId").prop("disabled", false);
 				}
@@ -94,21 +109,21 @@ $j(function () {
 
 
 //비밀번호 글자수
-$j(function () {
-    const $numCheck = $j('#numCheck');
-    const $userInsertBtn = $j('#userInsertBtn');
+$j(function() {
+	const $numCheck = $j('#numCheck');
+	const $userInsertBtn = $j('#userInsertBtn');
 
-    $j('#userPwd').on('input', function () {
-        const password = $j(this).val();
+	$j('#userPwd').on('input', function() {
+		const password = $j(this).val();
 
-        if (password.length < 6) {
-            $numCheck.show().css("color", "red").text("6글자 이상 입력해주세요");
-        } else if (password.length > 12) {
-            $numCheck.show().css("color", "red").text("12글자를 초과했습니다");
-        } else {
-            $numCheck.hide();
-        }
-    });
+		if (password.length < 6) {
+			$numCheck.show().css("color", "red").text("6글자 이상 입력해주세요");
+		} else if (password.length > 12) {
+			$numCheck.show().css("color", "red").text("12글자를 초과했습니다");
+		} else {
+			$numCheck.hide();
+		}
+	});
 });
 
 

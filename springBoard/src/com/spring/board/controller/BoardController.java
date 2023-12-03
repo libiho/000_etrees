@@ -44,17 +44,20 @@ public class BoardController {
 	 */
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
 	public String boardList(Locale locale, Model model, TypeVo typeVo,
-			@RequestParam(value = "cpage", defaultValue = "1") int currentPage) throws Exception {
+			@RequestParam(value = "pageNo", defaultValue = "1") int currentPage) throws Exception {
 
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
 		List<CodeVo> boardType = new ArrayList<CodeVo>();
 
-		int pageNo = 1;
 		int totalCnt = 0;
 
 		if (typeVo.getPageNo() == 0) {
-			typeVo.setPageNo(pageNo);
+			typeVo.setPageNo(currentPage);
 		}
+		
+		int pageNo = typeVo.getPageNo();
+		
+		currentPage = typeVo.getPageNo();
 
 		boardList = boardService.selectBoardList(typeVo);
 		totalCnt = boardService.selectBoardCnt(typeVo);
@@ -68,6 +71,7 @@ public class BoardController {
 		model.addAttribute("totalCnt", totalCnt);
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("pi", pi);
+		
 
 		return "board/boardList";
 	}
@@ -82,19 +86,21 @@ public class BoardController {
 	@RequestMapping(value = "/board/boardListSearch.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> boardListSearch(Locale locale, Model model, TypeVo typeVo,
-			@RequestParam(value = "cpage", defaultValue = "1") int currentPage) throws Exception {
+			@RequestParam(value = "pageNo", defaultValue = "1") int currentPage) throws Exception {
+		
 
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
 		List<CodeVo> boardType = new ArrayList<CodeVo>();
 
 		int totalCnt = 0;
-		int page = 1;
-
+		
 		if (typeVo.getPageNo() == 0) {
-			typeVo.setPageNo(page);
+			typeVo.setPageNo(currentPage);
 		}
 
-		if (typeVo.getBoardType() != null && typeVo.getBoardType().equals("on")) {
+		int pageNo = typeVo.getPageNo();
+
+		if (typeVo.getBoardType() != null && typeVo.getBoardType().equals("selectAll")) {
 			typeVo.setBoardType(null);
 		}
 		currentPage = typeVo.getPageNo();
@@ -110,7 +116,7 @@ public class BoardController {
 		response.put("boardList", boardList);
 		response.put("totalCnt", totalCnt);
 		response.put("boardType", boardType);
-		response.put("pageNo", page);
+		response.put("pageNo", currentPage);
 		response.put("pi", pi);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
