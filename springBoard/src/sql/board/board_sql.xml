@@ -117,8 +117,8 @@
 
 
 
-	<select id="boardSearchTotal" parameterType="com.spring.board.vo.TypeVo"
-		resultType="Integer">
+	<select id="boardSearchTotal"
+		parameterType="com.spring.board.vo.TypeVo" resultType="Integer">
 		SELECT
 		COUNT(*) AS TOTAL_CNT
 		FROM

@@ -3,14 +3,23 @@
 
 <mapper namespace="mbti">
 
-<resultMap type="com.spring.mbti.vo.MbtiVo" id="mbtiVo">
+	<resultMap type="com.spring.mbti.vo.MbtiVo" id="mbtiVo">
+
+		<result property="mbtiNum" column="MBTI_NUM" />
+		<result property="mbtiTwoType" column="MBTI_TWOTYPE" />
+		<result property="mbtiQuiz" column="MBTI_QUIZ" />
+		<result property="creator" column="CREATOR" />
+		<result property="modifier" column="MODIFIER" />
+
+	</resultMap>
 
 
+	<select id="mbtiListAll" resultMap="mbtiVo">
+		SELECT MBTI_NUM, MBTI_TWOTYPE, MBTI_QUIZ
+		FROM TB_MBTI
+		WHERE STATE = 'Y'
 
-</resultMap>
-
-
-
+	</select>
 
 
 
