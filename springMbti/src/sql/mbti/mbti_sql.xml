@@ -14,11 +14,11 @@
 	</resultMap>
 
 
-	<select id="mbtiListAll" resultMap="mbtiVo">
+	<select id="mbtiListAll" resultMap="mbtiVo" parameterType="map">
 		SELECT MBTI_NUM, MBTI_TWOTYPE, MBTI_QUIZ
 		FROM TB_MBTI
 		WHERE STATE = 'Y'
-
+		AND MBTI_NUM BETWEEN #{startNum} AND #{endNum}
 	</select>
 
 

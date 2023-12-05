@@ -28,6 +28,7 @@ $j(document)
 				} else if (nowPage <= 5) {
 					pageNo = 6;
 				} else {
+					/* 이식 잘못된거같다 ((nowPage/5)+1) * 5 + 1 이 맞는거 같음 ### */
 					pageNo = (nowPage / 5) * 5 + 1;
 				}
 

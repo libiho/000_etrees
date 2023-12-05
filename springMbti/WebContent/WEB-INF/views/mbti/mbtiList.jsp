@@ -18,101 +18,24 @@
 	<form action="">
 
 		<div class="test-questions comp">
+			
+			<c:forEach var="iteration" begin="1" end="1">
+			<c:forEach items="${mbtiList }" var="list">
 
 			<!-- ### 답하기 전 질문 / 답하고 난 질문에는 inactive 추가하기 -->
-			<fieldset class="inputoptions ">
+			<fieldset class="inputoptions ${list.mbtiTwoType}">
 
 
-				<div class="content">
-
-					<div class="quiz_text">
-						<%-- 			
-			<c:forEach items="${mbtiList }" var="list">
-				<span>${list.mbtiQuiz }</span>
-				<span>${list.mbtiTwoType }</span>
-			</c:forEach>
-			 --%>
-						<span class="text_center">질문이 5개씩 뿌려지고 다음 누르면 다음질문 5개씩 </span>
-
-					</div>
-
-					<div id="group_options">
-
-
-
-						<div class="radios">
-							<div class="agree text_left">동의</div>
-							<!-- ### 한 원형  -->
-							<span class="sp-radio size--70 color--green radio__tick">
-								<label> <!-- ### -3,-2,1,0,1,2,3 으로 값 정하기 그리고 세션으로 마지막에 값 처리 -->
-									<input type="radio" value="-3" name="question1"> <span></span>
-
-							</label>
-							</span>
-							<!-- ### 한 원형  -->
-
-							<span class="sp-radio size--55 color--green radio__tick">
-								<label> <!-- ### -3,-2,1,0,1,2,3 으로 값 정하기 그리고 세션으로 마지막에 값 처리 -->
-									<input type="radio" value="-3" name="question1"> <span></span>
-
-
-							</label>
-							</span> <span class="sp-radio size--45 color--green radio__tick">
-								<label> <!-- ### -3,-2,1,0,1,2,3 으로 값 정하기 그리고 세션으로 마지막에 값 처리 -->
-									<input type="radio" value="-3" name="question1"> <span></span>
-
-							</label>
-							</span> <span class="sp-radio size--35 color--neutral radio__tick">
-								<labe for=""> <!-- ### -3,-2,1,0,1,2,3 으로 값 정하기 그리고 세션으로 마지막에 값 처리 -->
-								<input type="radio" value="-3" id="" name="question1"> <span></span> </labe>
-							</span>
-
-							<!-- 보라색  -->
-							<span class="sp-radio size--45 color--purple radio__tick">
-								<label> <!-- ### -3,-2,1,0,1,2,3 으로 값 정하기 그리고 세션으로 마지막에 값 처리 -->
-									<input type="radio" value="-3" name="question1"> <span></span>
-
-							</label>
-							</span> <span class="sp-radio size--55 color--purple radio__tick">
-								<label> <!-- ### -3,-2,1,0,1,2,3 으로 값 정하기 그리고 세션으로 마지막에 값 처리 -->
-									<input type="radio" value="-3" name="question1"> <span></span>
-
-							</label>
-							</span> <span class="sp-radio size--70 color--purple radio__tick">
-								<label> <!-- ### -3,-2,1,0,1,2,3 으로 값 정하기 그리고 세션으로 마지막에 값 처리 -->
-									<input type="radio" value="-3" name="question1"> <span></span>
-
-							</label>
-							</span>
-
-							<div class="agree text_right">비동의</div>
-						</div>
-
-
-
-
-
-					</div>
-					<!-- id 그룹옵션 div -->
-				</div>
-				<!-- 첫 .content div-->
-				<!-- fieldset의 반복! -->
-			</fieldset>
-			<!-- fieldset 끝 @@@ -->
-
-				<fieldset class="inputoptions ">
-
+				<input type="hidden" class="quizNum" value="${list.mbtiNum}">
 
 				<div class="content">
 
 					<div class="quiz_text">
-						<%-- 			
-			<c:forEach items="${mbtiList }" var="list">
-				<span>${list.mbtiQuiz }</span>
-				<span>${list.mbtiTwoType }</span>
-			</c:forEach>
-			 --%>
-						<span class="text_center">질문이 5개씩 뿌려지고 다음 누르면 다음질문 5개씩 </span>
+								
+		
+			
+		
+						<span class="text_center">${list.mbtiQuiz } </span>
 
 					</div>
 
@@ -125,7 +48,7 @@
 							<!-- ### 한 원형  -->
 							<span class="sp-radio size--70 color--green radio__tick">
 								<label> 
-									<input type="radio" value="-3"> <span></span>
+									<input type="radio" value="-3" name="question${list.mbtiNum}""> <span></span>
 
 							</label>
 							</span>
@@ -133,34 +56,34 @@
 
 							<span class="sp-radio size--55 color--green radio__tick">
 								<label> 
-									<input type="radio" value="-2"> <span></span>
+									<input type="radio" value="-2" name="question1"> <span></span>
 
 
 							</label>
 							</span> <span class="sp-radio size--45 color--green radio__tick">
 								<label> 
-									<input type="radio" value="-1"> <span></span>
+									<input type="radio" value="-1" name="question1" > <span></span>
 
 							</label>
 							</span> <span class="sp-radio size--35 color--neutral radio__tick">
 								<labe for=""> 
-								<input type="radio" value="0" id=""> <span></span> </labe>
+								<input type="radio" value="0" id="" name="question1"> <span></span> </labe>
 							</span>
 
 							<!-- 보라색  -->
 							<span class="sp-radio size--45 color--purple radio__tick">
 								<label> 
-									<input type="radio" value="1"> <span></span>
+									<input type="radio" value="1" name="question1"> <span></span>
 
 							</label>
 							</span> <span class="sp-radio size--55 color--purple radio__tick">
 								<label> 
-									<input type="radio" value="2"> <span></span>
+									<input type="radio" value="2" name="question1"> <span></span>
 
 							</label>
 							</span> <span class="sp-radio size--70 color--purple radio__tick">
 								<label> 
-									<input type="radio" value="3"> <span></span>
+									<input type="radio" value="3" name="question1"> <span></span>
 
 							</label>
 							</span>
@@ -175,10 +98,21 @@
 					</div>
 					<!-- id 그룹옵션 div -->
 				</div>
+
+			
 				<!-- 첫 .content div-->
 				<!-- fieldset의 반복! -->
 			</fieldset>
+		
 			<!-- fieldset 끝 @@@ -->
+
+	
+				</c:forEach> 
+
+</c:forEach>
+
+
+			
 
 			<div class="action-row">
 				<button type="button" class="sp-button button-color next-buton">
@@ -191,6 +125,7 @@
 					</span>
 				</button>
 			</div>
+		
 		</div>
 		<!-- form 바로 앞 div -->
 	</form>
@@ -200,12 +135,34 @@
 
 			$j('.next-buton').click(function() {
 
+
+
+			var arr = [];
+
+			$j('.quizNum').each(function(){
+				arr.push($j(this).val());
+			})
+
+				
+			var endNum = Math.max(...arr);
+			var startNum = Math.min(...arr);
+
+			console.log(startNum);
+			console.log(endNum);
+
+
 				$j.ajax({
 
 					type : 'GET',
-					url : " /*여기 집어넣어야해!! ###  */ ",
+					url : "/mbti/mbtiNextPage.do",
+					data : {
+						startNum : startNum,
+						endNum : endNum
+					},
 					success : function(data) {
-						console.log(data);
+
+						var mbtiList = data.mbtiList;
+						console.log(mbtiList);
 
 						/* ### 다음 누르면 ajax로 화면 그대로 세팅   */
 
@@ -241,7 +198,19 @@ spRadios.forEach(function(spRadio) {
     });
 });
 
+// 색 추가
 
+const oneClick = document.querySelectorAll('.sp-radio');
+
+oneClick.forEach(function(spRadio) {
+    spRadio.addEventListener('click', function() {
+        oneClick.forEach(function(radio) {
+            radio.classList.remove('is-checked-green ');
+        });
+
+        spRadio.classList.add('is-checked-green ');
+    });
+});
 
 
 	</script>

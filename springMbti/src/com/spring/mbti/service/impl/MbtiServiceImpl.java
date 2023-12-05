@@ -1,6 +1,7 @@
 package com.spring.mbti.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,11 @@ public class MbtiServiceImpl implements MbtiService {
 	@Autowired
 	MbtiDao mbtiDao;
 
+
+
 	@Override
-	public List<MbtiVo> selectMbtiAll() throws Exception {
-		return mbtiDao.selectMbtiAll();
+	public List<MbtiVo> selectMbtiAll(Map<String, Object> map) throws Exception {
+		return mbtiDao.selectMbtiAll(map);
 	}
 
 }
