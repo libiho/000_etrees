@@ -83,6 +83,46 @@ public class BoardController {
 	 * @date : 2023. 11. 27.
 	 */
 
+//	@RequestMapping(value = "/board/boardListSearch.do", produces = "application/json; charset=utf-8")
+//	@ResponseBody
+//	public ResponseEntity<Map<String, Object>> boardListSearch(Locale locale, Model model, TypeVo typeVo,
+//			@RequestParam(value = "pageNo", defaultValue = "1") int currentPage) throws Exception {
+//		
+//
+//		List<BoardVo> boardList = new ArrayList<BoardVo>();
+//		List<CodeVo> boardType = new ArrayList<CodeVo>();
+//
+//		int totalCnt = 0;
+//		
+//		if (typeVo.getPageNo() == 0) {
+//			typeVo.setPageNo(currentPage);
+//		}
+//
+//		int pageNo = typeVo.getPageNo();
+//
+//		if (typeVo.getBoardType() != null && typeVo.getBoardType().equals("selectAll")) {
+//			typeVo.setBoardType(null);
+//		}
+//		currentPage = typeVo.getPageNo();
+//
+//		boardList = boardService.selectBoardListSearch(typeVo);
+//
+//		totalCnt = boardService.selectBoardCntSearch(typeVo);
+//		boardType = boardService.selectBoardType();
+//
+//		PageInfo pi = Pagination.getPageInfo(totalCnt, currentPage, 5, 5);
+//
+//		Map<String, Object> response = new HashMap<>();
+//		response.put("boardList", boardList);
+//		response.put("totalCnt", totalCnt);
+//		response.put("boardType", boardType);
+//		response.put("pageNo", currentPage);
+//		response.put("pi", pi);
+//
+//		return new ResponseEntity<>(response, HttpStatus.OK);
+//
+//	}
+	
 	@RequestMapping(value = "/board/boardListSearch.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> boardListSearch(Locale locale, Model model, TypeVo typeVo,
@@ -106,6 +146,13 @@ public class BoardController {
 		currentPage = typeVo.getPageNo();
 
 		boardList = boardService.selectBoardListSearch(typeVo);
+		
+		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		for(BoardVo str : boardList) {
+			System.out.println(str);
+		}
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
 		totalCnt = boardService.selectBoardCntSearch(typeVo);
 		boardType = boardService.selectBoardType();

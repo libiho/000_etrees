@@ -12,110 +12,179 @@
 	href="${pageContext.request.contextPath}/resources/css/mbtiList.css"
 	rel="stylesheet" />
 
+
+
+<script>
+
+	$j(document).ready(function() {
+
+
+		var showNum = $j('input[name="showNum"]').val();
+		
+		
+		$j('.quizNum').each(function(index) {
+			
+			if (index >= showNum) {
+				$j(this).closest('fieldset').addClass('noShow');
+			}
+			
+		})
+
+
+
+$j('.next-button').on('click',function(){
+		
+		var start = $j('input[name="startNum"]').val();
+		var end = $j('input[name="endNum"]').val();
+		var showNum = $j('input[name="showNum"]').val();
+		var min = start + showNum;
+		var max = end + showNum;
+
+				$j('input[name="startNum"]').val(min);
+				$j('input[name="endNum"]').attr('value',max);
+
+				start = $j('input[name="startNum"]').val();
+				end = $j('input[name="endNum"]').val();
+
+				console.log(start);
+				console.log(end);
+
+				$j('.quizNum').each(function() {
+
+					var value = parseInt($j(this).val());
+			
+			if (value > start && value <= end) {
+				$j(this).closest('fieldset').removeClass('noShow');
+			}else{
+				$j(this).closest('fieldset').addClass('noShow');
+			}
+			
+		})
+
+			});
+
+
+		
+		
+	});
+	
+	
+	
+</script>
+
+
 </head>
 <body>
 
 	<form action="">
 
+
 		<div class="test-questions comp">
-			
+
+			<input type="hidden" name="startNum" value="0"> <input
+				type="hidden" name="endNum" value="4">
+				<input type="hidden" name="showNum" value="4">
+
 			<c:forEach var="iteration" begin="1" end="1">
-			<c:forEach items="${mbtiList }" var="list">
+				<c:forEach items="${mbtiList }" var="list">
 
-			<!-- ### 답하기 전 질문 / 답하고 난 질문에는 inactive 추가하기 -->
-			<fieldset class="inputoptions ${list.mbtiTwoType}">
+					<!-- ### 답하기 전 질문 / 답하고 난 질문에는 inactive 추가하기 -->
+					<!-- ### 안보이게 설정하는 코드  -->
 
-
-				<input type="hidden" class="quizNum" value="${list.mbtiNum}">
-
-				<div class="content">
-
-					<div class="quiz_text">
-								
-		
-			
-		
-						<span class="text_center">${list.mbtiQuiz } </span>
-
-					</div>
-
-					<div id="group_options">
+					<fieldset class="inputoptions ${list.mbtiTwoType} "
+						id="node${list.mbtiNum}">
+						<input type="hidden" class="quizNum" value="${list.mbtiNum}">
 
 
 
-						<div class="radios">
-							<div class="agree text_left">동의</div>
-							<!-- ### 한 원형  -->
-							<span class="sp-radio size--70 color--green radio__tick">
-								<label> 
-									<input type="radio" value="-3" name="question${list.mbtiNum}""> <span></span>
+						<div class="content">
 
-							</label>
-							</span>
-							<!-- ### 한 원형  -->
-
-							<span class="sp-radio size--55 color--green radio__tick">
-								<label> 
-									<input type="radio" value="-2" name="question1"> <span></span>
+							<div class="quiz_text">
 
 
-							</label>
-							</span> <span class="sp-radio size--45 color--green radio__tick">
-								<label> 
-									<input type="radio" value="-1" name="question1" > <span></span>
 
-							</label>
-							</span> <span class="sp-radio size--35 color--neutral radio__tick">
-								<labe for=""> 
-								<input type="radio" value="0" id="" name="question1"> <span></span> </labe>
-							</span>
 
-							<!-- 보라색  -->
-							<span class="sp-radio size--45 color--purple radio__tick">
-								<label> 
-									<input type="radio" value="1" name="question1"> <span></span>
+								<span class="text_center">${list.mbtiQuiz } </span>
 
-							</label>
-							</span> <span class="sp-radio size--55 color--purple radio__tick">
-								<label> 
-									<input type="radio" value="2" name="question1"> <span></span>
+							</div>
 
-							</label>
-							</span> <span class="sp-radio size--70 color--purple radio__tick">
-								<label> 
-									<input type="radio" value="3" name="question1"> <span></span>
+							<div id="group_options">
 
-							</label>
-							</span>
 
-							<div class="agree text_right">비동의</div>
+
+								<div class="radios">
+									<div class="agree text_left">동의</div>
+									<!-- ### 한 원형  -->
+									<span class="sp-radio size--70 color--green radio__tick">
+										<label> <input type="radio" value="-3"
+											name="question${list.mbtiNum}""> <span></span>
+
+									</label>
+									</span>
+									<!-- ### 한 원형  -->
+
+									<span class="sp-radio size--55 color--green radio__tick">
+										<label> <input type="radio" value="-2"
+											name="question1"> <span></span>
+
+
+									</label>
+									</span> <span class="sp-radio size--45 color--green radio__tick">
+										<label> <input type="radio" value="-1"
+											name="question1"> <span></span>
+
+									</label>
+									</span> <span class="sp-radio size--35 color--neutral radio__tick">
+										<labe for=""> <input type="radio" value="0" id=""
+											name="question1"> <span></span> </labe>
+									</span>
+
+									<!-- 보라색  -->
+									<span class="sp-radio size--45 color--purple radio__tick">
+										<label> <input type="radio" value="1" name="question1">
+											<span></span>
+
+									</label>
+									</span> <span class="sp-radio size--55 color--purple radio__tick">
+										<label> <input type="radio" value="2" name="question1">
+											<span></span>
+
+									</label>
+									</span> <span class="sp-radio size--70 color--purple radio__tick">
+										<label> <input type="radio" value="3" name="question1">
+											<span></span>
+
+									</label>
+									</span>
+
+									<div class="agree text_right">비동의</div>
+								</div>
+
+
+
+
+
+							</div>
+							<!-- id 그룹옵션 div -->
 						</div>
 
 
+						<!-- 첫 .content div-->
+						<!-- fieldset의 반복! -->
+					</fieldset>
+
+					<!-- fieldset 끝 @@@ -->
+
+
+				</c:forEach>
+
+			</c:forEach>
 
 
 
-					</div>
-					<!-- id 그룹옵션 div -->
-				</div>
-
-			
-				<!-- 첫 .content div-->
-				<!-- fieldset의 반복! -->
-			</fieldset>
-		
-			<!-- fieldset 끝 @@@ -->
-
-	
-				</c:forEach> 
-
-</c:forEach>
-
-
-			
 
 			<div class="action-row">
-				<button type="button" class="sp-button button-color next-buton">
+				<button type="button" class="sp-button button-color next-button">
 					<span class="button__text">다음</span>
 					<!-- ### 화살표 중심 맞추기 -->
 					<span class="sp-icon"> <svg aria-labelledby="i_ymrgu5ygrr"
@@ -125,93 +194,59 @@
 					</span>
 				</button>
 			</div>
-		
+
 		</div>
 		<!-- form 바로 앞 div -->
 	</form>
 
 	<script>
-		$j(function() {
+		// JavaScript 코드
+		const spRadios = document.querySelectorAll('.sp-radio');
 
-			$j('.next-buton').click(function() {
+		spRadios.forEach(function(spRadio) {
+			spRadio.addEventListener('click', function() {
+				// 클릭한 .sp-radio 요소 내의 input 값을 가져옵니다.
+				const input = spRadio.querySelector('input');
+				const value = input.value;
 
+				// 해당 값으로 원하는 작업을 수행합니다.
+				console.log('선택된 값:', value);
 
+				// 이후 작업을 추가하려면 이곳에 코드를 작성하세요.
+			});
+		});
 
-			var arr = [];
+		// 색 추가
 
-			$j('.quizNum').each(function(){
-				arr.push($j(this).val());
-			})
+			// showFieldsets();
 
-				
-			var endNum = Math.max(...arr);
-			var startNum = Math.min(...arr);
-
-			console.log(startNum);
-			console.log(endNum);
-
-
-				$j.ajax({
-
-					type : 'GET',
-					url : "/mbti/mbtiNextPage.do",
-					data : {
-						startNum : startNum,
-						endNum : endNum
-					},
-					success : function(data) {
-
-						var mbtiList = data.mbtiList;
-						console.log(mbtiList);
-
-						/* ### 다음 누르면 ajax로 화면 그대로 세팅   */
-
-					},
-					error : function(error) {
-						alert('mbti 조회 실패');
-					}
-
-				})
-
-			})
-
-		})
+			//   라디오 버튼 클릭시 투명도 주는 거 이 함수는 활용하자 ### 
+			//   $j('fieldset input[type="radio"]').on('click', function() {
+			//     $j(this).closest('fieldset').addClass('inactive');
+			//   });
 
 
 
 
-// JavaScript 코드
-const spRadios = document.querySelectorAll('.sp-radio');
 
-spRadios.forEach(function(spRadio) {
-    spRadio.addEventListener('click', function() {
-        // 클릭한 .sp-radio 요소 내의 input 값을 가져옵니다.
-        const input = spRadio.querySelector('input');
-        const value = input.value;
-        
-        // 해당 값으로 원하는 작업을 수행합니다.
-        console.log('선택된 값:', value);
 
-		
-        
-        // 이후 작업을 추가하려면 이곳에 코드를 작성하세요.
-    });
-});
+		function showFieldsets() {
+			let maxToShow = 5;
+			let currentQuizNum = 0;
 
-// 색 추가
+			$j('.quizNum').each(
+					function() {
+						let value = parseInt($j(this).val());
+						currentQuizNum++;
 
-const oneClick = document.querySelectorAll('.sp-radio');
-
-oneClick.forEach(function(spRadio) {
-    spRadio.addEventListener('click', function() {
-        oneClick.forEach(function(radio) {
-            radio.classList.remove('is-checked-green ');
-        });
-
-        spRadio.classList.add('is-checked-green ');
-    });
-});
-
+						if (value >= currentQuizNum
+								&& value <= currentQuizNum + maxToShow) {
+							$j(this).closest('fieldset').removeClass('noShow');
+						} else {
+							$j(this).closest('fieldset').addClass('noShow');
+						}
+					});
+		}
 
 	</script>
 

@@ -10,4 +10,6 @@ public interface MbtiService {
 
 	public List<MbtiVo> selectMbtiAll(Map<String, Object> map) throws Exception;
 
+	public List<MbtiVo> selectMbtiAll() throws Exception;
+
 }

@@ -23,4 +23,11 @@ public class MbtiServiceImpl implements MbtiService {
 		return mbtiDao.selectMbtiAll(map);
 	}
 
+
+
+	@Override
+	public List<MbtiVo> selectMbtiAll() throws Exception {
+		return mbtiDao.selectMbtiAll();
+	}
+
 }

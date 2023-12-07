@@ -346,12 +346,12 @@
 		,CREATOR
 		FROM
 		BOARD
-        where BOARD_TYPE in ('a01')
+        where BOARD_TYPE in ('a03','a04')
 		)
 		WHERE
-		NUMROW BETWEEN (2-1)* 5 + 1
+		NUMROW BETWEEN (1-1)* 5 + 1
 		AND
-		(2)*5
+		(1)*5
 
             ;
         
@@ -370,3 +370,83 @@
          board
         where board_type = 'a03'
         ;
+        
+        
+        
+        SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,TOTAL_CNT
+		,CREATOR
+		FROM
+		(
+		SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,ROW_NUMBER()
+		OVER(ORDER BY
+		BOARD_NUM DESC) AS NUMROW
+		,COUNT(*) OVER() AS
+		TOTAL_CNT
+		,CREATOR
+		FROM
+		BOARD
+		 
+			WHERE BOARD_TYPE IN (
+			'a03','a04'
+			)
+		 
+		)
+		WHERE
+		NUMROW BETWEEN (1-1)* 5 + 1
+		AND
+		(1)*5
+        ;
+        
+        SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,TOTAL_CNT
+		,CREATOR
+		FROM
+		(
+		SELECT
+		BOARD_TYPE
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,ROW_NUMBER()
+		OVER(ORDER BY
+		BOARD_NUM DESC) AS NUMROW
+		,COUNT(*) OVER() AS
+		TOTAL_CNT
+		,CREATOR
+		FROM
+		BOARD
+		 
+			WHERE BOARD_TYPE IN (
+			'a03'
+			)
+		 
+		)
+		WHERE
+		NUMROW BETWEEN (1-1)* 5 + 1
+		AND
+		(1)*5
+        ;
+        
+        SELECT
+		COUNT(*) AS TOTAL_CNT
+		FROM
+		BOARD
+		 
+			WHERE BOARD_TYPE IN (
+			'a01','a03'
+			);
+        

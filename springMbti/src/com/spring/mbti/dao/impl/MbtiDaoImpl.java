@@ -26,4 +26,11 @@ public class MbtiDaoImpl implements MbtiDao{
 
 	}
 
+
+
+	@Override
+	public List<MbtiVo> selectMbtiAll() throws Exception {
+		return sqlSession.selectList("mbtiListAll");
+	}
+
 }
