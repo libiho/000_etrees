@@ -100,12 +100,21 @@
 }
 
 .is-checked-purple {
-	border-color: #88619a;
+	background-color: #88619a;
 	border-top-color: rgb(136, 97, 154);
 	border-right-color: rgb(136, 97, 154);
 	border-bottom-color: rgb(136, 97, 154);
 	border-left-color: rgb(136, 97, 154);
 }
+
+.is-checked-neutral {
+	background-color: #9b9faa;
+	border-top-color:#9b9faa;
+	border-right-color: #9b9faa;
+	border-bottom-color: #9b9faa;
+	border-left-color: #9b9faa;
+}
+
 
 .color--green:hover {
 	background-color: #33a474;
@@ -185,10 +194,10 @@
 	padding-left: 40px;
 	background-color: #88619a;
 	border-color: #88619a;
-	border-top-color: rgb(136, 97, 154);
-	border-right-color: rgb(136, 97, 154);
-	border-bottom-color: rgb(136, 97, 154);
+	/* border-top-color: rgb(136, 97, 154);
 	border-left-color: rgb(136, 97, 154);
+	border-bottom-color: rgb(136, 97, 154);
+	border-right-color: rgb(136, 97, 154); */
 }
 
 .sp-button:hover {

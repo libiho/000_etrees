@@ -5,7 +5,7 @@ $j(document)
 	.on(
 		'click',
 		'#pageLinksArea a',
-		function(event) {
+		function (event) {
 			event.preventDefault();
 
 			var pageNo = $j(this).text(); // 클릭된 페이지 번호 가져오기
@@ -50,7 +50,7 @@ $j(document)
 			var checkArr = [];
 			var boardType = "";
 
-			$j('input[name="boardType"]:checked').each(function() {
+			$j('input[name="boardType"]:checked').each(function () {
 				var chk = $j(this).val();
 
 				checkArr.push(chk);
@@ -60,7 +60,7 @@ $j(document)
 				} else {
 
 
-					boardType = checkArr.map(function(value) {
+					boardType = checkArr.map(function (value) {
 						return "'" + value + "'";
 					}).join(',');
 
@@ -78,7 +78,7 @@ $j(document)
 							// 클릭된 페이지 번호 전달
 						},
 						contentType: "application/json; charset=UTF-8",
-						success: function(data, textStatus,
+						success: function (data, textStatus,
 							jqXHR) {
 
 							updatdTable(data);
@@ -93,7 +93,7 @@ $j(document)
 								+ "</td>");
 
 						},
-						error: function(jqXHR, textStatus,
+						error: function (jqXHR, textStatus,
 							errorThrown) {
 							console.log("에러: " + errorThrown);
 						}
@@ -142,15 +142,15 @@ $j(document)
 
 
 
-			$j(document).ready(function() {
+			$j(document).ready(function () {
 
 
-				$j('#boardSearchBtn').on("click", function() {
+				$j('#boardSearchBtn').on("click", function () {
 
 					var checkArr = [];
 					var boardType = "";
 
-					$j('input[name="boardType"]:checked').each(function() {
+					$j('input[name="boardType"]:checked').each(function () {
 						var chk = $j(this).val();
 
 						checkArr.push(chk);
@@ -160,7 +160,7 @@ $j(document)
 						} else {
 
 
-							boardType = checkArr.map(function(value) {
+							boardType = checkArr.map(function (value) {
 								return "'" + value + "'";
 							}).join(',');
 
@@ -180,12 +180,12 @@ $j(document)
 							data: {
 								boardType: boardType
 							},
-							success: function(data) {
+							success: function (data) {
 								updatdTable(data);
 
 
 							},
-							error: function(error) {
+							error: function (error) {
 								alert('잘못됐다~~~');
 							}
 
@@ -320,4 +320,4 @@ $j(document)
 			}
 
 
-
+		})

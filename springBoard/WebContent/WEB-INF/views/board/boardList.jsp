@@ -25,8 +25,7 @@
 
 
 </head>
-<script
-	src="${pageContextpageContext.request.contextPath}/resources/js/board.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/board.js"></script>
 
 <body>
 	<table align="center">
@@ -107,7 +106,7 @@
 					</c:forEach>
 
 
-					<button type="button" id="boardSearchBtn" >조회</button>
+					<button type="button" id="boardSearchBtn">조회</button>
 				</form>
 			</td>
 		</tr>

@@ -80,5 +80,13 @@ public class MbtiController {
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/mbti/mbtiResult.do",method = RequestMethod.GET)
+	public String mbtiResult (Locale locale, Model model, String mResult) {
+		
+		
+		model.addAttribute("result",mResult);
+		return "mbti/mbtiResult";
+	}
 
 }
