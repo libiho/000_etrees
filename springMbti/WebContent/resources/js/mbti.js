@@ -125,16 +125,13 @@ function sum(arr) {
 
     })
 
-
-
-    // 여기서 result 리턴해줘야함
     result += getResult('E', 'I', newArr);
     result += getResult('S', 'N', newArr);
     result += getResult('F', 'T', newArr);
     result += getResult('J', 'P', newArr);
 
 
-   return result;
+    return result;
 }
 
 
@@ -149,16 +146,13 @@ function resultMbti() {
     var backType = "";
     var result = "";
 
-    // 모든 fieldset을 선택합니다.
     const fieldsets = document.querySelectorAll('fieldset');
 
-    // 각 fieldset 안의 input 요소들을 확인합니다.
     fieldsets.forEach(function (fieldset) {
         var inputs = fieldset.querySelectorAll('input[type="radio"]:checked');
 
         console.log(inputs);
 
-        // 각 input 요소에 대해 체크된 값을 확인하고 배열에 추가합니다.
         inputs.forEach(function (input) {
 
             value = parseInt(input.value);
@@ -171,14 +165,13 @@ function resultMbti() {
 
 
 
-     result = sum(arr);
+    result = sum(arr);
 
+    $j('input[name="mResult"]').val(result);
 
-     $j('input[name="mResult"]').val(result);
+    var form = $j('#mbtiResult');
 
-     var form = $j('#mbtiResult');
-
-     form.submit();
+    form.submit();
 
 }
 
