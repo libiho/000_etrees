@@ -39,14 +39,68 @@ function backColor(classList, spRadio) {
 }
 
 
-var sum_E = 0;
-var sum_I = 0;
-var sum_T = 0;
-var sum_F = 0;
-var sum_N = 0;
-var sum_S = 0;
-var sum_J = 0;
-var sum_P = 0;
+function getResult(type1, type2, newArr) {
+
+    if (sumType[type1] === sumType[type2]) {
+        return newArr.indexOf(type1) < newArr.indexOf(type2) ? type1 : type2;
+    } else {
+        return sumType[type1] > sumType[type2] ? type1 : type2;
+    }
+
+}
+
+
+
+var sumType = {
+    'E': 0,
+    'I': 0,
+    'S': 0,
+    'N': 0,
+    'T': 0,
+    'F': 0,
+    'J': 0,
+    'P': 0
+}
+
+
+function scores(frontType, value, backType) {
+
+
+    var addNum = 0;
+
+    switch (value) {
+        case (1):
+            addNum = parseInt(3);
+            sumType[frontType] += addNum;
+            break;
+        case (2):
+            addNum = parseInt(2);
+            sumType[frontType] += addNum;
+            break;
+        case (3):
+            addNum = parseInt(1);
+            sumType[frontType] += addNum;
+            break;
+        case (4):
+            addNum = parseInt(0);
+            sumType[frontType] += addNum;
+            sumType[backType] += addNum;
+            break;
+        case (5):
+            addNum = parseInt(1);
+            sumType[backType] += addNum;
+            break;
+        case (6):
+            addNum = parseInt(2);
+            sumType[backType] += addNum;
+            break;
+        case (7):
+            addNum = parseInt(3);
+            sumType[backType] += addNum;
+            break;
+    }
+
+}
 
 
 
@@ -55,86 +109,78 @@ function sum(arr) {
     var result = "";
 
     var newArr = [];
-
-    var type = ""
+    var frontType = "";
+    var backType = "";
     var value = 0;
+
     arr.forEach(function (item) {
 
-        type = item.type;
+        frontType = item.frontType;
         value = parseInt(item.value);
+        backType = item.backType;
 
-        newArr.push(type);
+        newArr.push(frontType);
 
+        scores(frontType, value, backType);
 
-        switch (type) {
-            case ('E'):
-                sum_E += value;
-                break;
-            case ('I'):
-                sum_I += value;
-                break;
-            case ('F'):
-                sum_F += value;
-                break;
-            case ('T'):
-                sum_T += value;
-                break;
-            case ('N'):
-                sum_N += value;
-                break;
-            case ('S'):
-                sum_S += value;
-                break;
-            case ('J'):
-                sum_J += value;
-                break;
-            case ('P'):
-                sum_P += value;
-                break;
-        }
     })
 
-    // console.log("E의 합계는  : " + sum_E);
-    // console.log("I의 합계는  : " + sum_I);
-    // console.log("T의 합계는  : " + sum_T);
-    // console.log("F의 합계는  : " + sum_F);
-    // console.log("N의 합계는  : " + sum_N);
-    // console.log("S의 합계는  : " + sum_S);
-    // console.log("J의 합계는  : " + sum_J);
-    // console.log("P의 합계는  : " + sum_P);
 
 
-    if (sum_E === sum_I) {
-        result += newArr.indexOf('E') < newArr.indexOf('I') ? 'E' : 'I'
-    } else {
-        result += sum_E > sum_I ? 'E' : 'I';
-    }
+    // 여기서 result 리턴해줘야함
+    result += getResult('E', 'I', newArr);
+    result += getResult('S', 'N', newArr);
+    result += getResult('F', 'T', newArr);
+    result += getResult('J', 'P', newArr);
 
 
-    if (sum_S === sum_N) {
-        result += newArr.indexOf('S') < newArr.indexOf('N') ? 'S' : 'N';
-    } else {
-        result += sum_S > sum_N ? 'S' : 'N';
-    }
-
-
-    if (sum_F === sum_T) {
-        result += newArr.indexOf('F') < newArr.indexOf('T') ? 'F' : 'T'
-    } else {
-        result += sum_F > sum_T ? 'F' : 'T';
-    }
-
-
-    if (sum_J === sum_P) {
-        result += newArr.indexOf('J') < newArr.indexOf('P') ? 'J' : 'P';
-    } else {
-        result += sum_J > sum_P ? 'J' : 'P';
-    }
-    return result;
+   return result;
 }
 
 
 
+
+
+function resultMbti() {
+
+    var arr = [];
+    var value = 0;
+    var frontType = "";
+    var backType = "";
+    var result = "";
+
+    // 모든 fieldset을 선택합니다.
+    const fieldsets = document.querySelectorAll('fieldset');
+
+    // 각 fieldset 안의 input 요소들을 확인합니다.
+    fieldsets.forEach(function (fieldset) {
+        var inputs = fieldset.querySelectorAll('input[type="radio"]:checked');
+
+        console.log(inputs);
+
+        // 각 input 요소에 대해 체크된 값을 확인하고 배열에 추가합니다.
+        inputs.forEach(function (input) {
+
+            value = parseInt(input.value);
+            frontType = input.id.substring(0, 1);
+            backType = input.id.substring(1, 2);
+            arr.push({ frontType, value, backType });
+
+        });
+    });
+
+
+
+     result = sum(arr);
+
+
+     $j('input[name="mResult"]').val(result);
+
+     var form = $j('#mbtiResult');
+
+     form.submit();
+
+}
 
 
 
@@ -193,41 +239,27 @@ function nextQuestion() {
 
 
 
-function resultMbti() {
 
-    var arr = [];
-    var value = 0;
-    var type = "";
-    var result = "";
 
-    // 모든 fieldset을 선택합니다.
-    const fieldsets = document.querySelectorAll('fieldset');
+function radioChecked() {
+    const fieldsets = document
+        .querySelectorAll('fieldset');
 
-    // 각 fieldset 안의 input 요소들을 확인합니다.
+    let allSelected = true;
+
     fieldsets.forEach(function (fieldset) {
-        var inputs = fieldset.querySelectorAll('input[type="radio"]:checked');
-
-        console.log(inputs);
-
-        // 각 input 요소에 대해 체크된 값을 확인하고 배열에 추가합니다.
-        inputs.forEach(function (input) {
-
-            value = parseInt(input.value);
-            type = input.id.substring(0, 1);
-            arr.push({ value, type });
-
-
-
-        });
+        if (!fieldset.classList.contains('noShow') && !fieldset.classList.contains('inactive')) {
+            allSelected = false;
+            return;
+        }
     });
-    result = sum(arr);
-    // result = sum(value,type,arr);
-    $j('input[name="mResult"]').val(result);
 
-    var form = $j('#mbtiResult');
 
-    form.submit();
-
+    if (allSelected) {
+        nextQuestion();
+    } else {
+        alert('모든 질문에 답하세요!');
+    }
 }
 
 

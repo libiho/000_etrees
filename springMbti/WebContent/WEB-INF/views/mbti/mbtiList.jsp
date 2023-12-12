@@ -78,7 +78,7 @@
 									<!-- ### 한 원형  -->
 									<span class="sp-radio size--70 color--green radio__tick"
 										> <label> <input
-											type="radio" value="-3" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
+											type="radio" value="1" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
 											<span></span>
 											
 										</label>
@@ -87,39 +87,39 @@
 									
 									<span class="sp-radio size--55 color--green radio__tick"
 									> <label> <input
-										type="radio" value="-2" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
+										type="radio" value="2" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
 										<span></span>
 										
 										
 									</label>
 									</span> <span class="sp-radio size--45 color--green radio__tick"
 									> <label> <input
-											type="radio" value="-1" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
+											type="radio" value="3" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
 											<span></span>
 											
 										</label>
 									</span> <span class="sp-radio size--35 color--neutral radio__tick"
 									> <labe for=""> <input
-										type="radio" value="0" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
+										type="radio" value="4" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
 										<span></span> </labe>
 									</span>
 
 									<!-- 보라색  -->
 									<span class="sp-radio size--45 color--purple radio__tick"
 										> <label> <input
-											type="radio" value="1" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
+											type="radio" value="5" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
 											<span></span>
 											
 										</label>
 									</span> <span class="sp-radio size--55 color--purple radio__tick"
 									> <label> <input
-											type="radio" value="2" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
+											type="radio" value="6" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
 											<span></span>
 											
 										</label>
 									</span> <span class="sp-radio size--70 color--purple radio__tick"
 									> <label> <input
-										type="radio" value="3" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
+										type="radio" value="7" name="question${list.mbtiNum}" id="${list.mbtiTwoType}">
 										<span></span>
 										
 									</label>
@@ -224,35 +224,32 @@ spRadios.forEach(function (spRadio) {
 
 
 		submitButton.addEventListener('click', resultMbti);
+		nextButton.addEventListener('click', radioChecked);
 
 
 		// '다음' 버튼 클릭 이벤트
-		nextButton.addEventListener('click', function() {
-			// 모든 fieldset을 가져옵니다.
-			const fieldsets = document
-					.querySelectorAll('fieldset');
+		// nextButton.addEventListener('click', function() {
+		// 	const fieldsets = document
+		// 			.querySelectorAll('fieldset');
 
-			let allSelected = true;
+		// 	let allSelected = true;
 
-			//모든 fieldset을 반복하여 선택되었는지 확인합니다.
-			  fieldsets.forEach(function(fieldset) {
-			    if (!fieldset.classList.contains('noShow') && !fieldset.classList.contains('inactive')) {
-			      allSelected = false;
-			      return;
-			    }
-			  });
+		// 	  fieldsets.forEach(function(fieldset) {
+		// 	    if (!fieldset.classList.contains('noShow') && !fieldset.classList.contains('inactive')) {
+		// 	      allSelected = false;
+		// 	      return;
+		// 	    }
+		// 	  });
 
-			// 모든 fieldset이 선택되었다면 다음 버튼 활성화
-			if (allSelected) {
+			
+		// 	if (allSelected) {
+		// 				nextQuestion();
+		// 	} else {
+		// 		alert('모든 질문에 답하세요!');
+		// 	}
+		// });
 
-						nextQuestion();
-
-			} else {
-				// 모든 fieldset이 선택되지 않았다면 다음 버튼 비활성화
-				alert('모든 질문에 답하세요!');
-			}
-		});
-
+		
 	
 	</script>
 
