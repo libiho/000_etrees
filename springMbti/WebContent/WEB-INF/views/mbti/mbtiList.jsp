@@ -226,31 +226,17 @@ spRadios.forEach(function (spRadio) {
 		submitButton.addEventListener('click', resultMbti);
 		nextButton.addEventListener('click', radioChecked);
 
-
-		// '다음' 버튼 클릭 이벤트
-		// nextButton.addEventListener('click', function() {
-		// 	const fieldsets = document
-		// 			.querySelectorAll('fieldset');
-
-		// 	let allSelected = true;
-
-		// 	  fieldsets.forEach(function(fieldset) {
-		// 	    if (!fieldset.classList.contains('noShow') && !fieldset.classList.contains('inactive')) {
-		// 	      allSelected = false;
-		// 	      return;
-		// 	    }
-		// 	  });
-
-			
-		// 	if (allSelected) {
-		// 				nextQuestion();
-		// 	} else {
-		// 		alert('모든 질문에 답하세요!');
-		// 	}
-		// });
-
-		
 	
+
+	function resultMbti(){
+		
+		
+
+	}
+
+
+
+
 	</script>
 
 </body>
