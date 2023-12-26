@@ -4,8 +4,45 @@
 <mapper namespace="recruit">
 
 
-<resultMap type="com.spring.recruit.vo.RecruitVo" id="recruitVo">
+	<resultMap type="com.spring.recruit.vo.RecruitVo"
+		id="recruitVo">
 
+		<result property="seq" column="SEQ" />
+		<result property="name" column="NAME" />
+		<result property="birth" column="BIRTH" />
+		<result property="gender" column="GENDER" />
+		<result property="phone" column="PHONE" />
+		<result property="email" column="EMAIL" />
+		<result property="addr" column="ADDR" />
+		<result property="location" column="LOCATION" />
+		<result property="workType" column="WORK_TYPE" />
+		<result property="submit" column="SUBMIT" />
 	</resultMap>
+
+
+
+	<insert id="memberInsert">
+	
+	INSERT 
+		INTO RECRUIT
+		(
+			SEQ
+			, NAME
+			, PHONE
+			, SUBMIT
+		)
+		VALUES
+		(
+			SEQ_RECRUIT.NEXTVAL
+			,
+			,
+			, 
+		)
+	
+	
+	</insert>
+
+
+
 
 </mapper>
