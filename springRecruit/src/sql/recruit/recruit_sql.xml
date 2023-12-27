@@ -21,6 +21,19 @@
 
 
 
+	<select id="selectMemberOne" parameterType="com.spring.recruit.vo.RecruitVo" resultType="Integer">
+	
+	SELECT
+		COUNT(NAME)
+	FROM RECRUIT
+	WHERE SUBMIT = 'login'
+	AND NAME = #{name}
+	AND PHONE = #{phone}
+	
+	
+	</select>
+
+
 	<insert id="memberInsert">
 	
 	INSERT 
