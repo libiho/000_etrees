@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,7 +47,7 @@ public class RecruitController {
 	
 	
 	@RequestMapping(value = "/check", method=RequestMethod.POST)
-	public String recruitCheck(@ModelAttribute RecruitVo recruitVo) {
+	public String recruitCheck(@ModelAttribute RecruitVo recruitVo, Model model) {
 
 		int result = rService.selectMemberOne(recruitVo);
 		
@@ -54,6 +55,11 @@ public class RecruitController {
 		// ### 0이면 없는거니깐 id랑 phone 집어넣기 jsp에
 		// ### 1이면 있는거니깐 그 숨긴처리한거 불러오게 조건식 작성하기 login이면 되겠다 submit 상태가
 		
+	
+		
+		
+		
+		model.addAttribute("recruitVo",recruitVo);
 		return "recruit/memberInsert";
 	}
 	
