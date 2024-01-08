@@ -53,7 +53,7 @@ public class RecruitController {
 		
 
 		// ### 0이면 없는거니깐 id랑 phone 집어넣기 jsp에
-		// ### 1이면 있는거니깐 그 숨긴처리한거 불러오게 조건식 작성하기 login이면 되겠다 submit 상태가
+		// ### 1이면 있는거니깐 그 숨긴처리한거 불러오게 조건식 작성하기 login이면 되겠다 submit 상태가 / 1이면 다시 recruitVo 세팅하기
 		
 	
 		

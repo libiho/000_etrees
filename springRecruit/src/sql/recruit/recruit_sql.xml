@@ -26,7 +26,7 @@
 	SELECT
 		COUNT(NAME)
 	FROM RECRUIT
-	WHERE SUBMIT = 'login'
+	WHERE SUBMIT IS NULL
 	AND NAME = #{name}
 	AND PHONE = #{phone}
 	

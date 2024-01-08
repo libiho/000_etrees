@@ -54,6 +54,9 @@ function postData() {
 
 
 $j('#btn').click(function () {
+	
+	console.log('????????');
+	
     checkNull();
     postData();
 })
