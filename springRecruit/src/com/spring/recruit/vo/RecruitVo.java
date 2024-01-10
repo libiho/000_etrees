@@ -75,6 +75,12 @@ public class RecruitVo {
 	public void setSumbit(String sumbit) {
 		this.sumbit = sumbit;
 	}
+	@Override
+	public String toString() {
+		return "RecruitVo [seq=" + seq + ", name=" + name + ", birth=" + birth + ", gender=" + gender + ", phone="
+				+ phone + ", email=" + email + ", addr=" + addr + ", location=" + location + ", workType=" + workType
+				+ ", sumbit=" + sumbit + "]";
+	}
 	
 	
 }

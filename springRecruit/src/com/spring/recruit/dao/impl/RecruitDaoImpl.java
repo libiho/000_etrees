@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.recruit.dao.RecruitDao;
 import com.spring.recruit.vo.RecruitVo;
+import com.spring.recruit.vo.commonVo;
 
 @Repository
 public class RecruitDaoImpl implements RecruitDao{

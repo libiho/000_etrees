@@ -57,19 +57,19 @@ h3 {
 	<h2 style="text-align: center;">입사지원서</h2>
 
 	<br>
-	<fieldset>
+	<!-- <fieldset> -->
 
         <!-- 경력 - 자격증 제외 나머지는 필수 항목  -->
 
 		<input type="hidden" name="sumbit" value="recruitVo.sumbit">
-
+<form id="memberForm" method="post">
 		<table align="center" border="1px">
 			<tr>
 				<th>이름<span class="required"></span></th>
 				<td><input type="text" name="name" class="input-field" value="${recruitVo.name}"></td>
 				<th>생년월일<span class="required"></span></th>
 				<td><input type="hidden" name="birth">
-					<input type="text" class="input-field" name="birthHyphen"  maxlength="8" oninput="birthHyphen(this)"></td>
+					<input type="text" class="input-field" name="birthHyphen"  maxlength="8" ></td>
 			</tr>
 			<tr>
 				<th>성별<span class="required"></span></th>
@@ -86,7 +86,7 @@ h3 {
 				<th>email<span class="required"></span></th>
 				<td><input name="email" class="input-field" oninput="isEmail(this)"></td>
 				<th>주소<span class="required"></span></th>
-				<td><input type="text" class="input-field"></td>
+				<td><input type="text" class="input-field" name="addr"></td>
 			</tr>
 			<tr>
 
@@ -106,9 +106,9 @@ h3 {
 			</tr>
 		</table>
 
-
+</form>
 <c:if test="${not empty recruitVo.sumbit } ">
-
+<form id="recruitForm" method="post">
 		<table align="center" border="1px" class="table-Width">
 			<tr>
 				<th>학력사항</th>
@@ -123,6 +123,7 @@ h3 {
 				<td></td>
 			</tr>
 		</table>
+		</form>
 </c:if>
 
 		<h3>학력<span class="required"></span></h3>
@@ -131,7 +132,7 @@ h3 {
 			<button class="education add">추가</button>
 			<button class="education delete">삭제</button>
 		</div>
-
+<form id="educationForm" method="post">
 		<table align="center" border="1px" class="table-Width education">
 			<tr>
 				<td class="checkSize"></td>
@@ -143,25 +144,25 @@ h3 {
 			</tr>
 			<tr class="template-row">
 				<td><input type="checkbox"></td>
-				<td><input type="text" name="start_period" class="input-field" > ~ <input class="input-field" type="text" name="end_period"></td>
+				<td><input type="text" name="startPeriod" class="input-field" > ~ <input class="input-field" type="text" name="endPeriod"></td>
 				<td><select name="division" class="input-field">
 						<option value="graduate">졸업</option>
 						<option value="attend">재학</option>
 						<option value="dropout">중퇴</option>
 				</select></td>
-				<td><input type="text" name="school_name" class="input-field"></td>
+				<td><input type="text" name="schoolName" class="input-field"></td>
 				<td><input type="text" name="major" class="input-field"></td>
 				<td><input type="text" name="grade" class="input-field"></td>
 			</tr>
 		</table>
-
+</form>
 		<h3>경력</h3>
 
 		<div class="placeW career">
 			<button class="career add">추가</button>
 			<button class="career delete">삭제</button>
 		</div>
-
+<form id="careerForm" method="post">
 		<table align="center" border="1px" class="table-Width career">
 			<tr>
 				<td class="checkSize"></td>
@@ -172,14 +173,15 @@ h3 {
 			</tr>
 			<tr class="template-row">
 				<td><input type="checkbox"></td>
-				<td><input type="text" name="start_period"> ~ <input type="text" name="end_period"></td>
-				<td><input type="text" name="comp_name"></td>
+				<td><input type="text" name="startPeriod"> ~ <input type="text" name="endPeriod"></td>
+				<td><input type="text" name="compName"></td>
 				<td><input type="text" name="salary"></td>
 				<td><input type="text" name="location"></td>
 			</tr>
 
 		</table>
-
+</form>
+<form id="certificateForm" method="post">
 		<h3>자격증</h3>
 
 		<div class="placeW certificate">
@@ -196,67 +198,67 @@ h3 {
 			</tr>
 			<tr class="template-row">
 				<td><input type="checkbox"></td>
-				<td><input type="text" name="qualifi_name"></td>
-				<td><input type="text" name="acqu_date"></td>
-				<td><input type="text" name="organize_name"></td>
+				<td><input type="text" name="qualifiName"></td>
+				<td><input type="text" name="acquDate"></td>
+				<td><input type="text" name="organizeName"></td>
 			</tr>
 
 		</table>
-
+</form>
 
 <!-- 모든 항목 입력 후 저장 및 제출 가능 -->
 <!-- ### 저장은 재 로그인시 수정가능, 제출은 로그인시 수정 불가능 -->
-<!-- 저장일때는 submit = 'save'로 insert 하고 제출일때는 submit = 'submit' -->
+<!-- 저장일때는 submit = 'save'로 insert 하고 제출일때는 submit = 'submit'  disabled -->
 		<div class="placeC">
-			<button class="save-btn btn" disabled>저장</button>
-			<button class="submit-btn btn" disabled>제출</button>
+			<button class="save-btn btn" >저장</button>
+			<button class="submit-btn btn">제출</button>
 		</div>
 
 
 
-	</fieldset>
+	<!-- </fieldset> -->
 
 	<script>
 
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-  const fields = document.querySelectorAll('.input-field');
-  const save_btn = document.querySelector('.save-btn');
-  const submit_btn = document.querySelector('.submit-btn');
+// document.addEventListener("DOMContentLoaded", function() {
+//   const fields = document.querySelectorAll('.input-field');
+//   const save_btn = document.querySelector('.save-btn');
+//   const submit_btn = document.querySelector('.submit-btn');
 
-function toggleBtn(state){
-	save_btn.disabled = state;
-	submit_btn.disabled = state;
-}
+// function toggleBtn(state){
+// 	save_btn.disabled = state;
+// 	submit_btn.disabled = state;
+// }
 
-toggleBtn(true);
+// toggleBtn(true);
 
-  function checkFields() {
-    let isValid = true;
+//   function checkFields() {
+//     let isValid = true;
 
-    fields.forEach(field => {
-      field.addEventListener('input', () => {
-        isValid = Array.from(fields).every(field => field.value.trim() !== '');
+//     fields.forEach(field => {
+//       field.addEventListener('input', () => {
+//         isValid = Array.from(fields).every(field => field.value.trim() !== '');
 
-        if (isValid) {
-			toggleBtn(false);
-        } else {
-			toggleBtn(true);
-        }
-      });
-    });
-  }
+//         if (isValid) {
+// 			toggleBtn(false);
+//         } else {
+// 			toggleBtn(true);
+//         }
+//       });
+//     });
+//   }
 
-  checkFields(); // 페이지 로드 시 필드 상태 확인
+//   checkFields(); // 페이지 로드 시 필드 상태 확인
 
-  // 기존에 등록된 이벤트 리스너 제거 후 다시 등록
-  fields.forEach(field => {
-    field.removeEventListener('input', checkFields);
-    field.addEventListener('input', checkFields);
-  });
-});
+//   // 기존에 등록된 이벤트 리스너 제거 후 다시 등록
+//   fields.forEach(field => {
+//     field.removeEventListener('input', checkFields);
+//     field.addEventListener('input', checkFields);
+//   });
+// });
 
 	function validatePhoneNumber(phoneNumber) {
 
@@ -306,7 +308,7 @@ toggleBtn(true);
 		}else{ // 저장을 눌렀을경우 수정 불가하게 readonly
 				
 		name.prop('readonly',true);
-		phone.prop('readonly',true);
+		 phone.prop('readonly',true);
 		
 		}
 
@@ -354,24 +356,61 @@ toggleBtn(true);
 
 	function save_Check(){
 
+	   // Ajax를 사용하여 서버에 여러 개의 요청을 보낸다.
+   
+    const memberFormData = new FormData(document.getElementById('memberForm'));
+    const educationFormData = new FormData(document.getElementById('educationForm'));
+    const careerFormData = new FormData(document.getElementById('careerForm'));
+    const certificateFormData = new FormData(document.getElementById('certificateForm'));
+
+    sendRequest('/recruit/insertMember', memberFormData);
+    sendRequest('/recruit/insertEucation', educationFormData);
+    sendRequest('/recruit/insertCareer', careerFormData);
+    sendRequest('/recruit/insertCart', certificateFormData);
+}
+
+// Ajax 요청 함수
+function sendRequest(url, formData) {
+    $j.ajax({
+        type: "POST",
+        url: url,
+        data: formData, // 전송할 데이터
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            // 각 컨트롤러에 대한 처리 성공 시 실행되는 코드
+            console.log("Successfully processed: " + data);
+            // 받은 데이터를 활용하여 필요한 처리 진행
+        },
+        error: function(xhr, status, error) {
+            // 각 컨트롤러에 대한 처리 실패 시 실행되는 코드
+            console.error("Error while processing: " + url);
+            console.error("Error while : " + error);
+            console.error("Error while status: " + status);
+        }
+    });
 		
 	}
 
 
 
 function isEmail(email){
+
+
 	let regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 	
 	
-	if(!regExp.test(email.val())){
+	if(!regExp.test(email.value)){
 		alert('이메일 형식을 다시 확인해주세요');
-		email.val() = '';
+		email.value = '';
 		email.focus();
 	} 
 }
 
 
 function birthHyphen(target){
+
+	console.log(' 안된다고? ', target);
 
 	let birth = target.value
    .replace(/[^0-9]/g, '')
@@ -398,8 +437,8 @@ function birth_pattern(target){
 }
 
 
-let startDate = document.querySelector('input[name="start_period"]');
-let endDate = document.querySelector('input[name="end_period"]');
+let startDate = document.querySelector('#educationForm input[name="startPeriod"]');
+let endDate = document.querySelector('#educationForm input[name="endPeriod"]');
 
 
 
